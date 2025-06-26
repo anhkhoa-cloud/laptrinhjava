@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="coach/layout/layout-head :: layout-head"></head>
+  <body>
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        <div th:replace="coach/layout/layout-menu :: layout-menu"></div>
+        <div class="layout-page">
+          <div th:replace="coach/layout/layout-navbar :: layout-navbar"></div>
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="py-3 mb-4">Hồ sơ huấn luyện viên</h4>
+              <div class="card mb-4">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-3 text-center">
+                      <img
+                        th:src="${coach.imageUrl}"
+                        class="img-thumbnail rounded-circle mb-3"
+                        style="width: 120px; height: 120px"
+                        alt="Avatar"
+                      />
+                      <h5 th:text="${coach.name}">Tên HLV</h5>
+                      <p class="text-muted" th:text="${coach.email}">Email</p>
+                      <p th:text="${coach.phone}">Số điện thoại</p>
+                    </div>
+                    <div class="col-md-9">
+                      <h6>Thông tin chi tiết</h6>
+                      <p>
+                        <strong>Chuyên môn:</strong>
+                        <span th:text="${coach.specialization}"></span>
+                      </p>
+                      <p>
+                        <strong>Kinh nghiệm:</strong>
+                        <span th:text="${coach.experience}"></span>
+                      </p>
+                      <p>
+                        <strong>Giới thiệu:</strong>
+                        <span th:text="${coach.bio}"></span>
+                      </p>
+                      <p>
+                        <strong>Chứng chỉ:</strong>
+                        <span th:text="${coach.certifications}"></span>
+                      </p>
+                      <p>
+                        <strong>Địa điểm:</strong>
+                        <span th:text="${coach.location}"></span>
+                      </p>
+                      <a
+                        class="btn btn-primary"
+                        th:href="@{/coach/profile/edit}"
+                        >Chỉnh sửa hồ sơ</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div th:replace="coach/layout/layout-footer :: layout-footer"></div>
+            <div class="content-backdrop fade"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

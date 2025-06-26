@@ -3,7 +3,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import org.apache.catalina.User;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -22,7 +21,7 @@ public class Booking {
 
     @ManyToOne
     @JoinColumn(name = "student_id")
-    private User student;
+    private Student student;
 
     @ManyToOne
     @JoinColumn(name = "coach_id")

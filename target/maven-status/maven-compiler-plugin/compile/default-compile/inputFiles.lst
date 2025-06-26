@@ -1,9 +1,11 @@
 D:\laptrinhjava\src\main\java\com\example\pickleball\controller\coach\BookingController.java
 D:\laptrinhjava\src\main\java\com\example\pickleball\controller\coach\CoachController.java
+D:\laptrinhjava\src\main\java\com\example\pickleball\controller\coach\CoachViewController.java
 D:\laptrinhjava\src\main\java\com\example\pickleball\model\Booking.java
 D:\laptrinhjava\src\main\java\com\example\pickleball\model\BookingStatus.java
 D:\laptrinhjava\src\main\java\com\example\pickleball\model\Coach.java
 D:\laptrinhjava\src\main\java\com\example\pickleball\model\Schedule.java
+D:\laptrinhjava\src\main\java\com\example\pickleball\model\Student.java
 D:\laptrinhjava\src\main\java\com\example\pickleball\PickleballApplication.java
 D:\laptrinhjava\src\main\java\com\example\pickleball\repository\BookingRepository.java
 D:\laptrinhjava\src\main\java\com\example\pickleball\repository\CoachRepository.java
