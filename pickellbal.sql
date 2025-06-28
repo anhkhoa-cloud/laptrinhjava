@@ -18,8 +18,11 @@ CREATE TABLE coaches (
     bio TEXT,
     image_path VARCHAR(255),
     hourly_rate DECIMAL(10,2),
+    experience VARCHAR(255),
+    certifications VARCHAR(255),
     is_approved BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     pdated_at TIMESTAMP NULL DEFAULT NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
