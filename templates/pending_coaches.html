@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Duyệt HLV</title>
+</head>
+<body>
+<h2>Danh sách HLV chờ duyệt</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Tên đầy đủ</th>
+        <th>Email</th>
+        <th>Duyệt</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="coach : ${coaches}">
+        <td th:text="${coach.user.fullName}"></td>
+        <td th:text="${coach.user.email}"></td>
+        <td>
+            <form th:action="@{'/admin/coaches/approve/' + ${coach.coachId}}" method="post">
+                <button type="submit">Duyệt</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

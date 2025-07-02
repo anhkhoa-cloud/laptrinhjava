@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><title>Form Video</title></head>
+<body>
+    <h2>Thêm / Sửa Video</h2>
+    <form th:action="@{/admin/videos/save}" th:object="${video}" method="post">
+        <input type="hidden" th:field="*{videoId}"/>
+        <label>Tiêu đề:</label><input type="text" th:field="*{title}"/><br/>
+        <label>Mô tả:</label><input type="text" th:field="*{description}"/><br/>
+        <label>Loại:</label>
+        <select th:field="*{videoType}">
+            <option value="YOUTUBE">YouTube</option>
+            <option value="UPLOAD">Upload</option>
+        </select><br/>
+        <label>YouTube ID:</label><input type="text" th:field="*{youtubeId}"/><br/>
+        <label>File URL:</label><input type="text" th:field="*{fileUrl}"/><br/>
+        <button type="submit">Lưu</button>
+    </form>
+</body>
+</html>
