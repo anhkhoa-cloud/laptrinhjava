@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  class="light-style layout-menu-fixed"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="../assets/"
+  data-template="vertical-menu-template-free"
+  xmlns:th="http://www.thymeleaf.org"
+>
+  <head th:replace="coach/layout-coach/layout-head :: layout-head"></head>
+
+  <body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        <!-- Menu -->
+        <div th:replace="coach/layout-coach/layout-menu ::layout-menu"></div>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          <!-- Navbar -->
+
+          <div
+            th:replace="coach/layout-coach/layout-navbar :: layout-navbar"
+          ></div>
+
+          <!-- / Navbar -->
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <div class="row">
+                <!-- Thông tin học viên -->
+                <div class="col-lg-4 mb-4">
+                  <div class="card">
+                    <div class="card-body text-center">
+                      <img
+                        src="../assets/img/avatars/5.png"
+                        class="rounded-circle mb-3"
+                        width="100"
+                        height="100"
+                        alt="Avatar"
+                      />
+                      <h5 class="mb-1">Nguyễn Văn A</h5>
+                      <span class="badge bg-label-primary mb-2">Học viên</span>
+                      <ul class="list-unstyled text-start mt-3 mb-0">
+                        <li><strong>Mã HV:</strong> HV12345</li>
+                        <li><strong>Lớp:</strong> Pickleball A1</li>
+                        <li><strong>Email:</strong> nguyenvana@email.com</li>
+                        <li><strong>Số điện thoại:</strong> 0123456789</li>
+                        <li>
+                          <strong>Trạng thái:</strong>
+                          <span class="badge bg-success">Đang học</span>
+                        </li>
+                        <li class="mt-2">
+                          <strong>Tiến độ tổng thể:</strong>
+                          <div class="progress mt-1" style="height: 8px">
+                            <div
+                              class="progress-bar bg-success"
+                              style="width: 75%"
+                            ></div>
+                          </div>
+                          <span class="text-muted small">75%</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <!-- Tiến độ chi tiết -->
+                <div class="col-lg-8 mb-4">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5>Chi tiết tiến độ học tập</h5>
+                    </div>
+                    <div class="card-body">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>Buổi học/Bài tập</th>
+                            <th>Ngày</th>
+                            <th>Trạng thái</th>
+                            <th>Điểm số</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Bài tập 1: Kỹ thuật cơ bản</td>
+                            <td>01/06/2024</td>
+                            <td>
+                              <span class="badge bg-success">Hoàn thành</span>
+                            </td>
+                            <td>9/10</td>
+                          </tr>
+                          <tr>
+                            <td>Bài tập 2: Di chuyển</td>
+                            <td>05/06/2024</td>
+                            <td>
+                              <span class="badge bg-warning text-dark"
+                                >Chưa hoàn thành</span
+                              >
+                            </td>
+                            <td>-</td>
+                          </tr>
+                          <tr>
+                            <td>Buổi học 1</td>
+                            <td>10/06/2024</td>
+                            <td>
+                              <span class="badge bg-success">Đã tham gia</span>
+                            </td>
+                            <td>-</td>
+                          </tr>
+                          <tr>
+                            <td>Buổi học 2</td>
+                            <td>15/06/2024</td>
+                            <td>
+                              <span class="badge bg-secondary"
+                                >Chưa tham gia</span
+                              >
+                            </td>
+                            <td>-</td>
+                          </tr>
+                          <!-- Thêm các dòng khác nếu cần -->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- / Content -->
+
+            <!-- Footer -->
+            <footer
+              th:replace="coach/layout-coach/layout-footer :: layout-footer"
+            ></footer>
+
+            <!-- / Footer -->
+
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="../assets/vendor/libs/popper/popper.js"></script>
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+    <script src="../assets/vendor/js/menu.js"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+    <script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+    <!-- Main JS -->
+    <script src="../assets/js/main.js"></script>
+
+    <!-- Page JS -->
+    <script src="../assets/js/dashboards-analytics.js"></script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

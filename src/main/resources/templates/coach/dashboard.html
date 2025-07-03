@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  class="light-style layout-menu-fixed"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="../assets/"
+  data-template="vertical-menu-template-free"
+  xmlns:th="http://www.thymeleaf.org"
+>
+  <head th:replace="coach/layout-coach/layout-head :: layout-head"></head>
+  <body>
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        <!-- Menu-->
+        <div th:replace="coach/layout-coach/layout-menu ::layout-menu"></div>
+
+        <div class="layout-page">
+          <!-- Navbar -->
+          <div
+            th:replace="coach/layout-coach/layout-navbar ::layout-navbar"
+          ></div>
+          <!-- /Navbar -->
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <div class="row">
+                <!-- Thông tin coach + 3 card -->
+                <div class="col-lg-8">
+                  <div class="row g-3">
+                    <div class="col-12">
+                      <div class="card p-3">
+                        <div class="row g-3 align-items-center">
+                          <div class="col-md-3 text-center">
+                            <img
+                              th:src="@{/assets/img/avatars/1.png}"
+                              class="dashboard-avatar mb-2"
+                              alt="Coach"
+                              style="
+                                width: 110px;
+                                height: 110px;
+                                object-fit: cover;
+                                border-radius: 50%;
+                                border: 2px solid #eee;
+                              "
+                            />
+                          </div>
+                          <div class="col-md-9">
+                            <h5 class="mb-2 text-primary">
+                              Thông tin huấn luyện viên
+                            </h5>
+                            <div class="row mb-1">
+                              <div class="col-sm-6">
+                                <span class="info-label">Mã HV:</span>
+                                <span class="info-value">C0001</span>
+                              </div>
+                              <div class="col-sm-6">
+                                <span class="info-label">Họ tên:</span>
+                                <span class="info-value">Nguyễn Văn A</span>
+                              </div>
+                            </div>
+                            <div class="row mb-1">
+                              <div class="col-sm-6">
+                                <span class="info-label">Ngày sinh:</span>
+                                <span class="info-value">01/01/1990</span>
+                              </div>
+                              <div class="col-sm-6">
+                                <span class="info-label">Số điện thoại:</span>
+                                <span class="info-value">0901234567</span>
+                              </div>
+                            </div>
+                            <div class="row mb-1">
+                              <div class="col-sm-6">
+                                <span class="info-label">Email:</span>
+                                <span class="info-value"
+                                  >coach@example.com</span
+                                >
+                              </div>
+                              <div class="col-sm-6">
+                                <span class="info-label">Chuyên môn:</span>
+                                <span class="info-value">Pickleball</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div
+                        class="card dashboard-card bg-light-danger text-center"
+                        style="
+                          min-height: 120px;
+                          display: flex;
+                          flex-direction: column;
+                          justify-content: center;
+                          align-items: center;
+                        "
+                      >
+                        <div class="mt-2 mb-1">
+                          <i class="bx bx-bell bx-lg text-danger"></i>
+                        </div>
+                        <div class="fs-3 fw-bold">0</div>
+                        <div class="mb-2">Nhắc nhở</div>
+                        <a href="#" class="text-danger small">Xem chi tiết</a>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div
+                        class="card dashboard-card bg-light-primary text-center"
+                        style="
+                          min-height: 120px;
+                          display: flex;
+                          flex-direction: column;
+                          justify-content: center;
+                          align-items: center;
+                        "
+                      >
+                        <div class="mt-2 mb-1">
+                          <i class="bx bx-calendar bx-lg text-primary"></i>
+                        </div>
+                        <div class="fs-3 fw-bold">5</div>
+                        <div class="mb-2">Lịch dạy trong tuần</div>
+                        <a href="#" class="text-primary small">Xem chi tiết</a>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div
+                        class="card dashboard-card bg-light-success text-center"
+                        style="
+                          min-height: 120px;
+                          display: flex;
+                          flex-direction: column;
+                          justify-content: center;
+                          align-items: center;
+                        "
+                      >
+                        <div class="mt-2 mb-1">
+                          <i class="bx bx-group bx-lg text-success"></i>
+                        </div>
+                        <div class="fs-3 fw-bold">25</div>
+                        <div class="mb-2">Tổng số học viên</div>
+                        <a href="#" class="text-success small">Xem chi tiết</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Lịch tháng -->
+                <div class="col-lg-4">
+                  <div class="card p-3 h-100">
+                    <h6 class="mb-3 text-primary">Lịch theo tháng</h6>
+                    <!-- Placeholder lịch tháng, bạn có thể thay bằng plugin JS hoặc code động -->
+                    <div class="text-center">
+                      <img
+                        th:src="@{/assets/img/illustrations/calendar.png}"
+                        alt="Calendar"
+                        style="max-width: 100%; height: 220px; opacity: 0.7"
+                      />
+                      <div class="mt-2 text-muted">
+                        (Lịch tháng sẽ hiển thị ở đây)
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Footer -->
+            <div
+              th:replace="coach/layout-coach/layout-footer ::layout-footer"
+            ></div>
+            <div class="content-backdrop fade"></div>
+          </div>
+        </div>
+      </div>
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <script th:src="@{/assets/vendor/libs/jquery/jquery.js}"></script>
+    <script th:src="@{/assets/vendor/libs/popper/popper.js}"></script>
+    <script th:src="@{/assets/vendor/js/bootstrap.js}"></script>
+    <script
+      th:src="@{/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"
+    ></script>
+    <script th:src="@{/assets/vendor/js/menu.js}"></script>
+    <script th:src="@{/assets/js/main.js}"></script>
+  </body>
+</html>
