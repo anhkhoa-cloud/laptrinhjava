@@ -1,71 +1,74 @@
-package com.example.pickleball.controller.coach;
-
-import com.example.pickleball.model.Booking;
-import com.example.pickleball.service.BookingService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+package com.example.pickleball.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/bookings")
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.pickleball.model.Booking;
+import com.example.pickleball.model.Booking.Status;
+import com.example.pickleball.model.Coach;
+import com.example.pickleball.model.User;
+import com.example.pickleball.service.BookingService;
+import com.example.pickleball.service.CoachService;
+import com.example.pickleball.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+
+@Controller
+@RequestMapping("/coach")
 public class BookingController {
-    @Autowired
-    private BookingService bookingService;
 
-    // Lấy tất cả booking của một huấn luyện viên
-    @GetMapping("/coach/{coachId}")
-    public List<Booking> getBookingsByCoach(@PathVariable Long coachId) {
-        return bookingService.getBookingsByCoachId(coachId);
+    @Autowired 
+    BookingService bookingService;
+
+    @Autowired 
+    UserService userService;
+
+    @Autowired 
+    CoachService coachService;
+
+    //Hiện danh sách booking
+   @GetMapping("/booking")
+public String listBookings(HttpSession session, Model model) {
+    Integer userId = (Integer) session.getAttribute("userId");
+    if (userId == null) {
+        return "redirect:/login";
+    }
+    User user = userService.getUserById(userId);
+    Coach coach = coachService.getCoachByUser(user);
+    if (coach == null) {
+        return "redirect:/login";
+    }
+    List<Booking> bookings = bookingService.getBookingsByCoach(coach);
+    model.addAttribute("bookings", bookings);
+    model.addAttribute("coach", coach);
+    model.addAttribute("user", user);
+    return "coach/booking";
+}
+    //thao tác xác nhận
+      @PostMapping("/accept/{id}")
+    public String acceptBooking(@PathVariable int id) {
+        bookingService.getBookingById(id).ifPresent(booking -> {
+            booking.setStatus(Status.ĐÃ_XÁC_NHẬN);
+            bookingService.saveBooking(booking);
+        });
+        return "redirect:/coach/booking";
+    }
+    @PostMapping("/reject/{id}")
+    public String rejectBooking(@PathVariable int id) {
+        bookingService.getBookingById(id).ifPresent(booking -> {
+            booking.setStatus(Status.ĐÃ_HỦY);
+            bookingService.saveBooking(booking);
+        });
+        return "redirect:/coach/booking";
     }
 
-    // Lấy booking theo ID
-    @GetMapping("/{id}")
-    public Optional<Booking> getBookingById(@PathVariable Long id) {
-        return bookingService.getBookingById(id);
-    }
-
-    // Tạo mới booking
-    @PostMapping
-    public Booking createBooking(@RequestBody Booking booking) {
-        return bookingService.saveBooking(booking);
-    }
-
-    // Cập nhật booking
-    @PutMapping("/{id}")
-    public Booking updateBooking(@PathVariable Long id, @RequestBody Booking booking) {
-        booking.setBookingId(id);
-        return bookingService.saveBooking(booking);
-    }
-
-    // Xóa booking
-    @DeleteMapping("/{id}")
-    public void deleteBooking(@PathVariable Long id) {
-        bookingService.deleteBooking(id);
-    }
-
-    // Xác nhận booking
-    @PostMapping("/{id}/confirm")
-    public Booking confirmBooking(@PathVariable Long id) {
-        return bookingService.confirmBooking(id);
-    }
-
-    // Từ chối booking
-    @PostMapping("/{id}/reject")
-    public Booking rejectBooking(@PathVariable Long id) {
-        return bookingService.rejectBooking(id);
-    }
-
-    // Hoàn thành booking
-    @PostMapping("/{id}/complete")
-    public Booking completeBooking(@PathVariable Long id) {
-        return bookingService.completeBooking(id);
-    }
-
-    // Hủy booking
-    @PostMapping("/{id}/cancel")
-    public Booking cancelBooking(@PathVariable Long id) {
-        return bookingService.cancelBooking(id);
-    }
 }
