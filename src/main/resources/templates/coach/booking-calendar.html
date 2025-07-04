@@ -8,524 +8,130 @@
   data-template="vertical-menu-template-free"
   xmlns:th="http://www.thymeleaf.org"
 >
-  <head th:replace="coach/layout/layout-head :: layout-head"></head>
+  <head th:replace="coach/layout-coach/layout-head :: layout-head">
+    <meta charset="UTF-8" />
+  </head>
   <body>
-    <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
-        <!-- Menu -->
-        <div th:replace="coach/layout/layout-menu :: layout-menu"></div>
+        <!-- Menu-->
+        <div th:replace="coach/layout-coach/layout-menu ::layout-menu"></div>
 
-        <!-- / Menu -->
-
-        <!-- Layout container -->
         <div class="layout-page">
           <!-- Navbar -->
-          <div th:replace="coach/layout/layout-navbar :: layout-navbar"></div>
-
-          <!-- / Navbar -->
-
-          <!-- Content wrapper -->
+          <div
+            th:replace="coach/layout-coach/layout-navbar ::layout-navbar"
+          ></div>
+          <!-- /Navbar -->
           <div class="content-wrapper">
-            <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="py-3 mb-4">
-                <span class="text-muted fw-light">Quản lý /</span> Lịch dạy
+              <h4 class="fw-bold py-3 mb-4">
+                <span class="text-muted fw-light">Quản lý /</span> Danh sách đặt
+                lịch
               </h4>
-
-              <!-- Calendar Controls -->
-              <div class="row mb-4">
-                <div class="col-md-6">
-                  <div class="btn-group" role="group">
-                    <button
-                      type="button"
-                      class="btn btn-outline-primary"
-                      onclick="changeView('month')"
-                    >
-                      Tháng
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-outline-primary"
-                      onclick="changeView('week')"
-                    >
-                      Tuần
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-outline-primary"
-                      onclick="changeView('day')"
-                    >
-                      Ngày
-                    </button>
-                  </div>
-                </div>
-                <div class="col-md-6 text-end">
-                  <button
-                    class="btn btn-outline-secondary"
-                    onclick="previousPeriod()"
-                  >
-                    <i class="bx bx-chevron-left"></i>
-                  </button>
-                  <button
-                    class="btn btn-outline-primary mx-2"
-                    onclick="today()"
-                  >
-                    Hôm nay
-                  </button>
-                  <button
-                    class="btn btn-outline-secondary"
-                    onclick="nextPeriod()"
-                  >
-                    <i class="bx bx-chevron-right"></i>
-                  </button>
-                  <span class="ms-3 fw-bold" id="currentPeriod"
-                    >Tháng 6, 2024</span
-                  >
-                </div>
-              </div>
-
-              <!-- Calendar -->
               <div class="card">
-                <div class="card-body">
-                  <div id="calendar"></div>
+                <h5 class="card-header">Danh sách Booking</h5>
+                <div class="table-responsive text-nowrap">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Học viên</th>
+                        <th>Ngày giờ</th>
+                        <th>Địa điểm</th>
+                        <th>trạng thái</th>
+                        <th>Thao tác</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                      <tr th:each="booking : ${bookings}">
+                        <td
+                          th:text="${booking.student != null && booking.student.fullName != null ? booking.student.fullName : 'Không xác định'}"
+                        >
+                          Họ và tên
+                        </td>
+                        <td>
+                          <span
+                            th:text="${#dates.format(booking.bookingDate, 'dd/MM/yyyy')}"
+                          ></span>
+                          <span th:text="${booking.startTime}"></span> -
+                          <span th:text="${booking.endTime}"></span>
+                        </td>
+
+                        <td
+                          th:text="${booking.location != null ? booking.location : 'Không xác định'}"
+                        >
+                          Địa điểm
+                        </td>
+                        <td>
+                          <span
+                            th:class="'badge me-1 ' + (${booking.status.name() == 'ĐÃ_XÁC_NHẬN'} ? 'bg-label-success' : (${booking.status.name() == 'ĐÃ_HỦY'} ? 'bg-label-danger' : (${booking.status.name() == 'HOÀN_THÀNH'} ? 'bg-label-secondary' : 'bg-label-warning')))"
+                            th:text="${booking.status}"
+                            >Trạng thái</span
+                          >
+                        </td>
+                        <td>
+                          <div
+                            class="dropdown"
+                            th:if="${booking.status.name() == 'CHỜ_XÁC_NHẬN'}"
+                          >
+                            <button
+                              type="button"
+                              class="btn p-0 dropdown-toggle hide-arrow"
+                              data-bs-toggle="dropdown"
+                            >
+                              <i
+                                class="icon-base bx bx-dots-vertical-rounded"
+                              ></i>
+                            </button>
+                            <div class="dropdown-menu">
+                              <form
+                                th:action="@{'/coach/bookings/accept/' + ${booking.bookingId}}"
+                                method="post"
+                              >
+                                <button class="dropdown-item" type="submit">
+                                  <i class="icon-base bx bx-edit-alt me-1"></i>
+                                  Xác nhận
+                                </button>
+                              </form>
+                              <form
+                                th:action="@{'/coach/bookings/reject/' + ${booking.bookingId}}"
+                                method="post"
+                              >
+                                <button class="dropdown-item" type="submit">
+                                  <i class="icon-base bx bx-edit-alt me-1"></i>
+                                  Từ chối
+                                </button>
+                              </form>
+                            </div>
+                          </div>
+                          <span
+                            th:if="${booking.status.name() != 'CHỜ_XÁC_NHẬN'}"
+                            >-</span
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
-            <!-- / Content -->
-
             <!-- Footer -->
-            <div th:replace="coach/layout/layout-footer :: layout-footer"></div>
-            <!-- / Footer -->
-
+            <div
+              th:replace="coach/layout-coach/layout-footer ::layout-footer"
+            ></div>
             <div class="content-backdrop fade"></div>
           </div>
-          <!-- Content wrapper -->
         </div>
-        <!-- / Layout page -->
       </div>
-
-      <!-- Overlay -->
       <div class="layout-overlay layout-menu-toggle"></div>
     </div>
-    <!-- / Layout wrapper -->
-
-    <!-- Booking Detail Modal -->
-    <div class="modal fade" id="bookingDetailModal" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Chi tiết lịch học</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-            ></button>
-          </div>
-          <div class="modal-body" id="bookingDetailContent">
-            <!-- Content will be loaded here -->
-          </div>
-          <div class="modal-footer" id="bookingDetailActions">
-            <!-- Actions will be loaded here -->
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Core JS -->
-    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="../assets/vendor/libs/popper/popper.js"></script>
-    <script src="../assets/vendor/js/bootstrap.js"></script>
-    <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="../assets/vendor/js/menu.js"></script>
-
-    <!-- Vendors JS -->
-    <script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script>
-
-    <!-- Main JS -->
-    <script src="../assets/js/main.js"></script>
-
-    <!-- FullCalendar CSS and JS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
-
-    <!-- Page JS -->
-    <script>
-      let calendar;
-      let currentView = "dayGridMonth";
-      let currentDate = new Date();
-
-      // Initialize calendar when page loads
-      document.addEventListener("DOMContentLoaded", function () {
-        initializeCalendar();
-        loadBookings();
-      });
-
-      // Initialize FullCalendar
-      function initializeCalendar() {
-        const calendarEl = document.getElementById("calendar");
-
-        calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: currentView,
-          initialDate: currentDate,
-          headerToolbar: false, // We'll use custom header
-          locale: "vi",
-          height: "auto",
-          selectable: true,
-          selectMirror: true,
-          dayMaxEvents: true,
-          weekends: true,
-          events: [], // Will be loaded from API
-
-          // Event click handler
-          eventClick: function (info) {
-            viewBookingDetail(info.event.id);
-          },
-
-          // Date click handler
-          dateClick: function (info) {
-            // Could open a modal to create new booking
-            console.log("Clicked on date:", info.dateStr);
-          },
-
-          // Event rendering
-          eventDidMount: function (info) {
-            // Add custom styling based on status
-            const status = info.event.extendedProps.status;
-            if (status === "PENDING") {
-              info.el.style.backgroundColor = "#ffc107";
-              info.el.style.borderColor = "#ffc107";
-            } else if (status === "CONFIRMED") {
-              info.el.style.backgroundColor = "#28a745";
-              info.el.style.borderColor = "#28a745";
-            } else if (status === "COMPLETED") {
-              info.el.style.backgroundColor = "#007bff";
-              info.el.style.borderColor = "#007bff";
-            } else if (status === "CANCELLED") {
-              info.el.style.backgroundColor = "#6c757d";
-              info.el.style.borderColor = "#6c757d";
-            }
-          },
-        });
-
-        calendar.render();
-        updatePeriodDisplay();
-      }
-
-      // Load bookings from API
-      function loadBookings() {
-        // For demo, using coach ID 1 - in real app, get from session
-        const coachId = 1;
-
-        fetch(`/api/bookings/coach/${coachId}`)
-          .then((response) => response.json())
-          .then((bookings) => {
-            const events = bookings.map((booking) => ({
-              id: booking.bookingId,
-              title: `${booking.student?.name || "Học viên"} - ${
-                booking.startTime
-              }-${booking.endTime}`,
-              start: `${booking.bookingDate}T${booking.startTime}`,
-              end: `${booking.bookingDate}T${booking.endTime}`,
-              status: booking.status,
-              student: booking.student,
-              extendedProps: {
-                status: booking.status,
-                studentName: booking.student?.name,
-                studentEmail: booking.student?.email,
-              },
-            }));
-
-            calendar.removeAllEvents();
-            calendar.addEventSource(events);
-          })
-          .catch((error) => {
-            console.error("Error loading bookings:", error);
-            // Show demo data for testing
-            const demoEvents = getDemoEvents();
-            calendar.removeAllEvents();
-            calendar.addEventSource(demoEvents);
-          });
-      }
-
-      // Change calendar view
-      function changeView(view) {
-        let newView;
-        switch (view) {
-          case "month":
-            newView = "dayGridMonth";
-            break;
-          case "week":
-            newView = "timeGridWeek";
-            break;
-          case "day":
-            newView = "timeGridDay";
-            break;
-          default:
-            newView = "dayGridMonth";
-        }
-
-        currentView = newView;
-        calendar.changeView(newView);
-        updatePeriodDisplay();
-      }
-
-      // Navigate to previous period
-      function previousPeriod() {
-        calendar.prev();
-        updatePeriodDisplay();
-      }
-
-      // Navigate to next period
-      function nextPeriod() {
-        calendar.next();
-        updatePeriodDisplay();
-      }
-
-      // Go to today
-      function today() {
-        calendar.today();
-        updatePeriodDisplay();
-      }
-
-      // Update period display
-      function updatePeriodDisplay() {
-        const currentDate = calendar.getDate();
-        let periodText = "";
-
-        if (currentView === "dayGridMonth") {
-          periodText = currentDate.toLocaleDateString("vi-VN", {
-            month: "long",
-            year: "numeric",
-          });
-        } else if (currentView === "timeGridWeek") {
-          const startOfWeek = new Date(currentDate);
-          startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
-          const endOfWeek = new Date(startOfWeek);
-          endOfWeek.setDate(startOfWeek.getDate() + 6);
-
-          periodText = `${startOfWeek.toLocaleDateString(
-            "vi-VN"
-          )} - ${endOfWeek.toLocaleDateString("vi-VN")}`;
-        } else if (currentView === "timeGridDay") {
-          periodText = currentDate.toLocaleDateString("vi-VN", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          });
-        }
-
-        document.getElementById("currentPeriod").textContent = periodText;
-      }
-
-      // View booking detail
-      function viewBookingDetail(bookingId) {
-        fetch(`/api/bookings/${bookingId}`)
-          .then((response) => response.json())
-          .then((booking) => {
-            const content = document.getElementById("bookingDetailContent");
-            const actions = document.getElementById("bookingDetailActions");
-
-            content.innerHTML = `
-              <div class="row">
-                <div class="col-md-6">
-                  <h6>Thông tin học viên</h6>
-                  <p><strong>Tên:</strong> ${booking.student?.name || "N/A"}</p>
-                  <p><strong>Email:</strong> ${
-                    booking.student?.email || "N/A"
-                  }</p>
-                  <p><strong>SĐT:</strong> ${
-                    booking.student?.phone || "N/A"
-                  }</p>
-                </div>
-                <div class="col-md-6">
-                  <h6>Thông tin lịch học</h6>
-                  <p><strong>Ngày:</strong> ${formatDate(
-                    booking.bookingDate
-                  )}</p>
-                  <p><strong>Thời gian:</strong> ${booking.startTime} - ${
-              booking.endTime
-            }</p>
-                  <p><strong>Trạng thái:</strong> ${getStatusText(
-                    booking.status
-                  )}</p>
-                </div>
-              </div>
-            `;
-
-            actions.innerHTML = `
-              ${
-                booking.status === "PENDING"
-                  ? `
-                <button type="button" class="btn btn-success" onclick="confirmBooking(${booking.bookingId})">
-                  <i class="bx bx-check"></i> Xác nhận
-                </button>
-                <button type="button" class="btn btn-danger" onclick="rejectBooking(${booking.bookingId})">
-                  <i class="bx bx-x"></i> Từ chối
-                </button>
-              `
-                  : ""
-              }
-              ${
-                booking.status === "CONFIRMED"
-                  ? `
-                <button type="button" class="btn btn-primary" onclick="completeBooking(${booking.bookingId})">
-                  <i class="bx bx-check-double"></i> Hoàn thành
-                </button>
-                <button type="button" class="btn btn-warning" onclick="cancelBooking(${booking.bookingId})">
-                  <i class="bx bx-x-circle"></i> Hủy
-                </button>
-              `
-                  : ""
-              }
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-            `;
-
-            new bootstrap.Modal(
-              document.getElementById("bookingDetailModal")
-            ).show();
-          })
-          .catch((error) => {
-            console.error("Error loading booking detail:", error);
-            alert("Không thể tải thông tin chi tiết");
-          });
-      }
-
-      // Booking actions
-      function confirmBooking(bookingId) {
-        if (confirm("Bạn có chắc muốn xác nhận lịch học này?")) {
-          updateBookingStatus(bookingId, "confirm");
-        }
-      }
-
-      function rejectBooking(bookingId) {
-        if (confirm("Bạn có chắc muốn từ chối lịch học này?")) {
-          updateBookingStatus(bookingId, "reject");
-        }
-      }
-
-      function completeBooking(bookingId) {
-        if (confirm("Bạn có chắc muốn đánh dấu hoàn thành lịch học này?")) {
-          updateBookingStatus(bookingId, "complete");
-        }
-      }
-
-      function cancelBooking(bookingId) {
-        if (confirm("Bạn có chắc muốn hủy lịch học này?")) {
-          updateBookingStatus(bookingId, "cancel");
-        }
-      }
-
-      // Update booking status
-      function updateBookingStatus(bookingId, action) {
-        fetch(`/api/bookings/${bookingId}/${action}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((response) => response.json())
-          .then((booking) => {
-            // Close modal if open
-            const modal = bootstrap.Modal.getInstance(
-              document.getElementById("bookingDetailModal")
-            );
-            if (modal) modal.hide();
-
-            // Reload bookings
-            loadBookings();
-
-            // Show success message
-            showToast(
-              "Thành công",
-              `Đã ${getActionText(action)} lịch học`,
-              "success"
-            );
-          })
-          .catch((error) => {
-            console.error("Error updating booking:", error);
-            showToast("Lỗi", "Không thể cập nhật trạng thái", "error");
-          });
-      }
-
-      // Utility functions
-      function formatDate(dateString) {
-        if (!dateString) return "N/A";
-        const date = new Date(dateString);
-        return date.toLocaleDateString("vi-VN");
-      }
-
-      function getStatusText(status) {
-        const texts = {
-          PENDING: "Chờ xác nhận",
-          CONFIRMED: "Đã xác nhận",
-          REJECTED: "Đã từ chối",
-          COMPLETED: "Đã hoàn thành",
-          CANCELLED: "Đã hủy",
-        };
-        return texts[status] || "Không xác định";
-      }
-
-      function getActionText(action) {
-        const texts = {
-          confirm: "xác nhận",
-          reject: "từ chối",
-          complete: "hoàn thành",
-          cancel: "hủy",
-        };
-        return texts[action] || action;
-      }
-
-      function showToast(title, message, type) {
-        // Simple toast implementation - you can use a proper toast library
-        alert(`${title}: ${message}`);
-      }
-
-      // Demo data for testing
-      function getDemoEvents() {
-        return [
-          {
-            id: 1,
-            title: "Nguyễn Văn A - 09:00-10:00",
-            start: "2024-06-10T09:00:00",
-            end: "2024-06-10T10:00:00",
-            status: "PENDING",
-            extendedProps: {
-              status: "PENDING",
-              studentName: "Nguyễn Văn A",
-              studentEmail: "nguyenvana@email.com",
-            },
-          },
-          {
-            id: 2,
-            title: "Trần Thị B - 14:00-15:00",
-            start: "2024-06-10T14:00:00",
-            end: "2024-06-10T15:00:00",
-            status: "CONFIRMED",
-            extendedProps: {
-              status: "CONFIRMED",
-              studentName: "Trần Thị B",
-              studentEmail: "tranthib@email.com",
-            },
-          },
-          {
-            id: 3,
-            title: "Lê Văn C - 10:00-11:00",
-            start: "2024-06-11T10:00:00",
-            end: "2024-06-11T11:00:00",
-            status: "COMPLETED",
-            extendedProps: {
-              status: "COMPLETED",
-              studentName: "Lê Văn C",
-              studentEmail: "levanc@email.com",
-            },
-          },
-        ];
-      }
-    </script>
+    <script th:src="@{/assets/vendor/libs/jquery/jquery.js}"></script>
+    <script th:src="@{/assets/vendor/libs/popper/popper.js}"></script>
+    <script th:src="@{/assets/vendor/js/bootstrap.js}"></script>
+    <script
+      th:src="@{/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"
+    ></script>
+    <script th:src="@{/assets/vendor/js/menu.js}"></script>
+    <script th:src="@{/assets/js/main.js}"></script>
   </body>
 </html>
