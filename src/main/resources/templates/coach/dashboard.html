@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  class="light-style layout-menu-fixed"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="../assets/"
+  data-template="vertical-menu-template-free"
+  xmlns:th="http://www.thymeleaf.org"
+>
+  <head th:replace="coach/layout-coach/layout-head :: layout-head">
+    <title>Trang Dashboard</title>
+  </head>
+  <body>
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        <!-- Menu-->
+        <div th:replace="coach/layout-coach/layout-menu ::layout-menu"></div>
+
+        <div class="layout-page">
+          <!-- Navbar -->
+          <div
+            th:replace="coach/layout-coach/layout-navbar ::layout-navbar"
+          ></div>
+          <!-- /Navbar -->
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <div class="row">
+                <!-- Card thông tin huấn luyện viên -->
+                <div class="col-12">
+                  <div
+                    class="card p-4 mb-4 coach-info"
+                    style="min-height: 210px"
+                  >
+                    <div class="row g-3 align-items-center">
+                      <div class="col-md-2 text-center">
+                        <img
+                          th:src="@{/assets/img/avatars/1.png}"
+                          class="dashboard-avatar mb-2"
+                          alt="Coach"
+                          style="
+                            width: 130px;
+                            height: 130px;
+                            object-fit: cover;
+                            border-radius: 50%;
+                            border: 3px solid #a5a5ff;
+                            box-shadow: 0 4px 16px rgba(100, 100, 255, 0.15);
+                          "
+                        />
+                      </div>
+                      <div class="col-md-10">
+                        <h4
+                          class="mb-3 text-primary fw-bold"
+                          style="font-size: 2rem"
+                        >
+                          Thông tin huấn luyện viên
+                        </h4>
+                        <div class="row mb-2 fs-5">
+                          <div class="col-sm-6">
+                            <span class="info-label">Mã HV:</span>
+                            <span
+                              class="info-value fw-semibold"
+                              th:text="${coach.coachId}"
+                              >C0001</span
+                            >
+                          </div>
+                          <div class="col-sm-6">
+                            <span class="info-label">Họ tên:</span>
+                            <span
+                              class="info-value fw-semibold"
+                              th:text="${coach.user.fullName}"
+                              >Nguyễn Văn A</span
+                            >
+                          </div>
+                        </div>
+                        <div class="row mb-2 fs-5">
+                          <div class="col-sm-6">
+                            <span class="info-label">Số điện thoại:</span>
+                            <span
+                              class="info-value"
+                              th:text="${coach.user.phone}"
+                              >0901234567</span
+                            >
+                          </div>
+                          <div class="col-sm-6">
+                            <span class="info-label">Email:</span>
+                            <span
+                              class="info-value"
+                              th:text="${coach.user.email}"
+                              >coach@example.com</span
+                            >
+                          </div>
+                        </div>
+                        <div class="row mb-2 fs-5">
+                          <div class="col-sm-6">
+                            <span class="info-label">Chứng chỉ:</span>
+                            <span
+                              class="info-value"
+                              th:text="${coach.certifications}"
+                              >Pickleball</span
+                            >
+                          </div>
+                          <div class="col-sm-6">
+                            <span class="info-label">Địa chỉ:</span>
+                            <span
+                              class="info-value"
+                              th:text="${coach.user.address}"
+                              >123 Đường ABC</span
+                            >
+                          </div>
+                        </div>
+                        <div class="row mb-2 fs-5">
+                          <div class="col-sm-12">
+                            <span class="info-label">Giới thiệu:</span>
+                            <span class="info-value" th:text="${coach.bio}"
+                              >Giới thiệu bản thân...</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- 3 card thống kê -->
+                <div class="col-12">
+                  <div class="row g-3">
+                    <div class="col-md-4">
+                      <div
+                        class="card dashboard-card bg-light-danger text-center"
+                        style="
+                          min-height: 120px;
+                          display: flex;
+                          flex-direction: column;
+                          justify-content: center;
+                          align-items: center;
+                        "
+                      >
+                        <div class="mt-2 mb-1">
+                          <i class="bx bx-bell bx-lg text-danger"></i>
+                        </div>
+                        <div
+                          class="fs-3 fw-bold text-danger"
+                          th:text="${reminderCount}"
+                        >
+                          0
+                        </div>
+                        <div class="mb-2">Nhắc nhở</div>
+                        <a href="/coach/profile" class="text-danger small"
+                          >Xem chi tiết</a
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div
+                        class="card dashboard-card bg-light-primary text-center"
+                        style="
+                          min-height: 120px;
+                          display: flex;
+                          flex-direction: column;
+                          justify-content: center;
+                          align-items: center;
+                        "
+                      >
+                        <div class="mt-2 mb-1">
+                          <i class="bx bx-calendar bx-lg text-primary"></i>
+                        </div>
+                        <div
+                          class="fs-3 fw-bold text-primary"
+                          th:text="${scheduleCount}"
+                        >
+                          5
+                        </div>
+                        <div class="mb-2">Lịch dạy trong tuần</div>
+                        <a href="/coach/schedule" class="text-primary small"
+                          >Xem chi tiết</a
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div
+                        class="card dashboard-card bg-light-success text-center"
+                        style="
+                          min-height: 120px;
+                          display: flex;
+                          flex-direction: column;
+                          justify-content: center;
+                          align-items: center;
+                        "
+                      >
+                        <div class="mt-2 mb-1">
+                          <i class="bx bx-group bx-lg text-success"></i>
+                        </div>
+                        <div
+                          class="fs-3 fw-bold text-success"
+                          th:text="${studentCount}"
+                        >
+                          25
+                        </div>
+                        <div class="mb-2">Tổng số học viên</div>
+                        <a href="/coach/student" class="text-success small"
+                          >Xem chi tiết</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Footer -->
+            <div
+              th:replace="coach/layout-coach/layout-footer ::layout-footer"
+            ></div>
+            <div class="content-backdrop fade"></div>
+          </div>
+        </div>
+      </div>
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <script th:src="@{/assets/vendor/libs/jquery/jquery.js}"></script>
+    <script th:src="@{/assets/vendor/libs/popper/popper.js}"></script>
+    <script th:src="@{/assets/vendor/js/bootstrap.js}"></script>
+    <script
+      th:src="@{/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"
+    ></script>
+    <script th:src="@{/assets/vendor/js/menu.js}"></script>
+    <script th:src="@{/assets/js/main.js}"></script>
+  </body>
+</html>
