@@ -78,9 +78,7 @@
           </g>
         </svg>
       </span>
-      <span class="app-brand-text demo menu-text fw-bolder ms-2"
-        >Pickleball Coach</span
-      >
+      <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
     </a>
 
     <a
@@ -95,60 +93,70 @@
 
   <ul class="menu-inner py-1">
     <!-- Dashboard -->
-    <li class="menu-item active">
-      <a href="/coach" class="menu-link">
+    <li class="menu-item">
+      <a href="/coach/dashboard" class="menu-link">
         <i class="menu-icon tf-icons bx bx-home-circle"></i>
-        <div data-i18n="Dashboard">Dashboard</div>
+        <div data-i18n="Analytics">Dashboard</div>
       </a>
     </li>
-    <!-- Profile -->
+
+    <!-- Layouts -->
     <li class="menu-item">
-      <a href="/coach/profile" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-user"></i>
-        <div data-i18n="Profile">Hồ sơ</div>
+      <a href="#" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-layout"></i>
+        <div data-i18n="Profile">Hồ sơ cá nhân</div>
       </a>
+
+      <ul class="menu-sub">
+        <li class="menu-item">
+          <a href="/coach/profile" class="menu-link">
+            <div data-i18n="Without menu">Xem thông tin chi tiết</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="/coach/update-profile" class="menu-link">
+            <div data-i18n="Without navbar">Cập nhật thông tin</div>
+          </a>
+        </li>
+      </ul>
     </li>
-    <!-- Schedule -->
-    <li class="menu-item">
-      <a href="/coach/booking-calendar" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-calendar"></i>
-        <div data-i18n="Schedule">Lịch dạy</div>
+      <li class="menu-item">
+      <a href="#" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-dock-top"></i>
+        <div data-i18n="Account Settings">Quản lý lịch</div>
       </a>
+      <ul class="menu-sub">
+        <li class="menu-item">
+          <a href="/coach/schedule" class="menu-link">
+            <div data-i18n="Account">Xem lịch dạy</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="/coach/booking" class="menu-link">
+            <div data-i18n="Notifications">Quản lý đặt lịch</div>
+          </a>
+        </li>
+      </ul>
     </li>
-    <!-- Bookings -->
     <li class="menu-item">
-      <a href="/coach/bookings" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-book-content"></i>
-        <div data-i18n="Bookings">Đặt lịch</div>
+      <a href="#" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-dock-top"></i>
+        <div data-i18n="Account Settings">Quản lý học viên</div>
       </a>
+      <ul class="menu-sub">
+        <li class="menu-item">
+          <a href="/coach/student" class="menu-link">
+            <div data-i18n="Account">Xem danh sách học viên</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="/coach/assignment" class="menu-link">
+            <div data-i18n="Notifications">Tiến độ & Bài tập</div>
+          </a>
+        </li>
+      </ul>
     </li>
-    <!-- Students -->
-    <li class="menu-item">
-      <a href="#" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-group"></i>
-        <div data-i18n="Students">Học viên</div>
-      </a>
-    </li>
-    <!-- Tutorials -->
-    <li class="menu-item">
-      <a href="#" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-video"></i>
-        <div data-i18n="Tutorials">Video hướng dẫn</div>
-      </a>
-    </li>
-    <!-- Reports -->
-    <li class="menu-item">
-      <a href="#" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-bar-chart-alt-2"></i>
-        <div data-i18n="Reports">Báo cáo</div>
-      </a>
-    </li>
-    <!-- Logout -->
-    <li class="menu-item">
-      <a href="#" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-power-off"></i>
-        <div data-i18n="Logout">Đăng xuất</div>
-      </a>
+  
     </li>
   </ul>
 </aside>
