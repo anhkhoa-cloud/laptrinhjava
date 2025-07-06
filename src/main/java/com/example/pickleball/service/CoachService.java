@@ -33,7 +33,7 @@ public class CoachService {
     // Cập nhật thông tin coach và user, xử lý upload file
     public Coach updateCoachProfile(Integer userId, User userForm, Coach coachForm, MultipartFile avatarFile) throws IOException {
         User user = userRepository.findById(userId).orElseThrow();
-       Coach coach = coachRepository.findByUser(user).orElse(null);
+        Coach coach = coachRepository.findByUser(user).orElse(null);
 
         // Update user
         user.setFullName(userForm.getFullName());
@@ -61,4 +61,21 @@ public class CoachService {
 
         return coachRepository.save(coach);
     }
+
+    public Coach saveCoach(Coach coach) { 
+        return coachRepository.save(coach); 
+    }
+
+
+    public void registerCoach(User user, Coach coach, MultipartFile profileImage) {
+        user.setRole(User.Role.COACH);
+        user.setActive(true);
+        User savedUser = userRepository.save(user);
+        coach.setUser(savedUser);
+        coachRepository.save(coach);
+    }
+      public Coach getCoachByUserId(Integer coachUserId) {
+      return coachRepository.findByUser_UserId(coachUserId);
+  }
+   
 }
