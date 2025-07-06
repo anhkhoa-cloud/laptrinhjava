@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} ? ${title} + ' - Pickellbal' : 'Pickellbal - Học Pickleball Online'">Pickellbal</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <i class="fas fa-table-tennis"></i> Pickellbal
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/videos/home}">
+                            <i class="fas fa-video"></i> Video Hướng Dẫn
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/bookings/schedule}">
+                            <i class="fas fa-calendar-plus"></i> Đặt Lịch (Huấn Luyện Viên)
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/progress}">
+                            <i class="fas fa-chart-line"></i> Tiến Độ
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item" th:if="${session.currentUser == null}">
+                        <a class="nav-link" th:href="@{/auth/login}"><i class="fas fa-sign-in-alt"></i> Đăng Nhập</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.currentUser == null}">
+                        <a class="nav-link" th:href="@{/auth/register}"><i class="fas fa-user-plus"></i> Đăng Ký</a>
+                    </li>
+                    <li class="nav-item dropdown" th:if="${session.currentUser != null}">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="rounded-circle bg-light d-inline-block text-center me-2" style="width:36px;height:36px;line-height:36px;">
+                                <i class="fas fa-user text-primary"></i>
+                            </span>
+                            <span th:text="${session.currentUser.username}">User</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li class="dropdown-item-text">
+                                <strong th:text="${session.currentUser.fullName}"></strong><br/>
+                                <small th:text="${session.currentUser.email}"></small>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" th:href="@{/auth/logout}"><i class="fas fa-sign-out-alt"></i> Đăng Xuất</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Alert Messages -->
+            <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle"></i> <span th:text="${success}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-circle"></i> <span th:text="${error}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <!-- Page Content -->
+            <div th:replace="~{${templateName} :: ${fragmentName}}"></div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <!-- <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-table-tennis"></i> Pickellbal</h5>
+                    <p>Nền tảng học Pickleball trực tuyến hàng đầu Việt Nam</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2025 Pickellbal. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer> -->
+    <footer class="footer mt-5 py-4 bg-dark text-light">
+        <div class="container">
+            <div class="row">
+                <!-- Thông tin về Pickellbal -->
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5><i class="fas fa-table-tennis"></i> Pickellbal</h5>
+                    <p>Nền tảng học Pickleball trực tuyến hàng đầu Việt Nam.<br>
+                    Kết nối cộng đồng, nâng cao kỹ năng, phát triển đam mê!</p>
+                    <p>
+                        <i class="fas fa-map-marker-alt"></i> Địa chỉ: 123 Đường ABC, Quận 1, TP.HCM<br>
+                        <i class="fas fa-envelope"></i> Email: <a href="mailto:support@pickellbal.vn" class="text-light">support@pickellbal.vn</a><br>
+                        <i class="fas fa-phone"></i> Hotline: <a href="tel:0123456789" class="text-light">0123 456 789</a>
+                    </p>
+                </div>
+                <!-- Liên kết nhanh -->
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5>Liên kết nhanh</h5>
+                    <ul class="list-unstyled">
+                        <li><a th:href="@{/}" class="text-light text-decoration-none"><i class="fas fa-home"></i> Trang chủ</a></li>
+                        <li><a th:href="@{/videos/home}" class="text-light text-decoration-none"><i class="fas fa-video"></i> Video hướng dẫn</a></li>
+                        <li><a th:href="@{/bookings/schedule}" class="text-light text-decoration-none"><i class="fas fa-calendar-plus"></i> Đặt lịch</a></li>
+                        <li><a th:href="@{/progress}" class="text-light text-decoration-none"><i class="fas fa-chart-line"></i> Tiến độ</a></li>
+                        <li><a th:href="@{/auth/login}" class="text-light text-decoration-none"><i class="fas fa-sign-in-alt"></i> Đăng nhập</a></li>
+                    </ul>
+                </div>
+                <!-- Mạng xã hội -->
+                <div class="col-md-4">
+                    <h5>Kết nối với chúng tôi</h5>
+                    <a href="https://facebook.com/" target="_blank" class="social-icon"><i class="fab fa-facebook"></i></a>
+                    <a href="https://youtube.com/" target="_blank" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    <a href="https://zalo.me/" target="_blank" class="social-icon"><i class="fas fa-comment-dots"></i></a>
+                    <a href="https://tiktok.com/" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                    <p class="mt-3">
+                        <span><i class="fas fa-clock"></i> Thời gian hỗ trợ: 8:00 - 22:00 (T2 - CN)</span>
+                    </p>
+                </div>
+            </div>
+            <hr class="bg-secondary">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <small>&copy; 2025 Pickellbal. All rights reserved. | Thiết kế & phát triển bởi đội ngũ Pickellbal</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    
+</body>
+</html>

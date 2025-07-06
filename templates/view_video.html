@@ -1,0 +1,28 @@
+<div th:fragment="watch_video" class="container mt-5">
+    <h2 class="mb-3" th:text="${video.title}"></h2>
+    <div class="text-center">
+        <iframe width="800" height="450"
+                th:src="'https://www.youtube.com/embed/' + ${video.youtubeId}"
+                frameborder="1"
+                allow="autoplay; encrypted-media"
+                allowfullscreen>
+        </iframe>
+    </div>
+    <!-- Đúng: -->
+    <button class="btn btn-success" th:onclick="'markAsCompleted(' + ${video.videoId} + ')'">Đã hoàn thành</button>
+    <script>
+    function markAsCompleted(videoId) {
+        fetch('/mvc/videos/completed/' + videoId, { method: 'POST' })
+    .then(res => {
+        if (res.status === 401) {
+            alert("Bạn cần đăng nhập để hoàn thành video!");
+            window.location.href = "/mvc/auth/login";
+        } else if (res.ok) {
+            alert("🎉 Hệ thống đã ghi nhận bạn đã học xong video!");
+        } else {
+            alert("❌ Ghi nhận thất bại!");
+        }
+    });
+    }
+    </script>
+</div>
