@@ -1,0 +1,123 @@
+<div th:fragment="mainContent">
+        <section class="py-5 text-center bg-light" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://vietthethao.com/public/uploads/images/1799/59f1b727-2585-4fbe-babe-23689a818496.jpeg'); background-size: cover; background-position: center; color: white;">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-md-start mb-4 mb-md-0">
+                        <h1 class="display-4 fw-bold">Chào mừng đến với Pickellbal!</h1>
+                        <p class="lead">Nền tảng học Pickleball trực tuyến hàng đầu Việt Nam. Khám phá các video hướng dẫn, đặt lịch với huấn luyện viên và theo dõi tiến độ học tập của bạn.</p>
+                        <a th:href="@{/videos/home}" class="btn btn-primary btn-lg mt-3"><i class="fas fa-play"></i> Xem Video Hướng Dẫn</a>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="https://vietthethao.com/public/uploads/images/1799/59f1b727-2585-4fbe-babe-23689a818496.jpeg" class="img-fluid rounded shadow" alt="Pickleball paddle and ball on court">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h2 class="fw-bold mb-4">Tại sao nên học Pickleball cùng chúng tôi?</h2>
+                        <div class="row justify-content-center">
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100 shadow-sm">
+                                    <a href="/mvc/bookings/schedule" style="text-decoration: none; color: black;"> 
+                                        <img src="/mvc/image/pickleball/1.jpg" class="card-img-top" alt="HLV Pickleball Chuyên Nghiệp" style="height: 200px; object-fit: cover;">
+                                        <div class="card-body">
+                                        <i class="fas fa-chalkboard-teacher fa-2x mb-3 text-primary"></i>
+                                        <h5 class="card-title">HLV Chuyên Nghiệp</h5>
+                                        <p class="card-text">Đội ngũ huấn luyện viên giàu kinh nghiệm, tận tâm hướng dẫn từng bước.</p>
+                                        </div>
+                                    </a>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <a href="/mvc/videos/home" style="text-decoration: none; color: black;">
+                                    <div class="card h-100 shadow-sm">
+                                    <img src="/mvc/image/pickleball/2.jpg?auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Video Hướng Dẫn Pickleball" style="height: 200px; object-fit: cover;">
+                                    <div class="card-body">
+                                        <i class="fas fa-video fa-2x mb-3 text-success"></i>
+                                        <h5 class="card-title">Video Hướng Dẫn Chất Lượng</h5>
+                                        <p class="card-text">Kho video đa dạng, từ cơ bản đến nâng cao, cập nhật liên tục.</p>
+                                    </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <a href="/mvc/bookings/schedule" style="text-decoration: none; color: black;">
+                                    <div class="card h-100 shadow-sm">
+                                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="Đặt Lịch Học Pickleball" style="height: 200px; object-fit: cover;">
+                                    <div class="card-body">
+                                        <i class="fas fa-calendar-check fa-2x mb-3 text-warning"></i>
+                                        <h5 class="card-title">Đặt Lịch Linh Hoạt</h5>
+                                        <p class="card-text">Chủ động chọn lịch học, theo dõi tiến độ và kết quả cá nhân.</p>
+                                    </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="py-5 bg-light" style="background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('https://vietthethao.com/public/uploads/images/1799/59f1b727-2585-4fbe-babe-23689a818496.jpeg'); background-size: cover; background-position: center;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h2 class="fw-bold mb-4">Tin tức mới nhất</h2>
+                        <p>Cập nhật các sự kiện, giải đấu và tin tức về Pickleball tại Việt Nam.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Tin 1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow-sm h-100">
+                            <img src="https://nld.mediacdn.vn/thumb_w/698/291774122806476800/2025/6/28/doi-nu-17511256528221765046829.jpg" class="card-img-top news-img" alt="Giải báo chí Pro Image Pickleball">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Giải Pickleball các cơ quan báo chí toàn quốc – Pro Image II</h5>
+                                <p class="card-text">Hơn 100 nhà báo tham dự giải đấu tại TP.HCM ngày 28/6 với nhiều nội dung hấp dẫn.</p>
+                                <a href="https://nld.com.vn/giai-pickleball-cac-co-quan-bao-chi-toan-quoc-pro-image-lan-ii-2025-196250628225127385.htm" target="_blank" class="btn btn-outline-primary btn-sm">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tin 2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow-sm h-100">
+                            <img src="https://cdn2.tuoitre.vn/thumb_w/730/471584752817336320/2025/6/28/skai2885-17511339422051382791479.jpg" class="card-img-top news-img" alt="Charity Cup 2025">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Charity Cup 2025 – "Hiến tạng cứu người"</h5>
+                                <p class="card-text">Gần 200 người tham gia giải pickleball từ thiện tại Vạn Phúc City, quyên góp hơn 103 triệu đồng.</p>
+                                <a href="https://tuoitre.vn/pickleball-la-cau-noi-hien-tang-o-charity-cup-2025-20250629011009799.htm" target="_blank" class="btn btn-outline-primary btn-sm">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tin 3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow-sm h-100">
+                            <img src="https://file3.qdnd.vn/data/images/0/2025/06/29/upload_2062/gen-h-2.jpg?dpi=150&quality=100&w=870"  class="card-img-top news-img" alt="MB HiGreen Pickleball">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Giải MBIT HiGreen – Gây quỹ 1 triệu cây xanh</h5>
+                                <p class="card-text">Sự kiện 28/6 thu hút 60 đối tác công nghệ, đóng góp cho chiến dịch trồng cây tại Trường Sa.</p>
+                                <a href="https://www.qdnd.vn/xa-hoi/tin-tuc/60-doi-tac-cong-nghe-cua-mb-tham-gia-giai-pickleball-gay-quy-trong-1-trieu-cay-xanh-tai-truong-sa-834899" target="_blank" class="btn btn-outline-primary btn-sm">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tin 4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow-sm h-100">
+                            <img src="https://cdnphoto.dantri.com.vn/6BMyTIDJlVKCFY9JCESWnJ7ZlG0=/thumb_w/1360/2025/06/28/dsc6993jpg-1751069120823.jpg?watermark=v1" class="card-img-top news-img" alt="VAR Pickleball Dân trí">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Công nghệ VAR tại Giải Pickleball báo Dân trí</h5>
+                                <p class="card-text">Lần đầu tiên ứng dụng hệ thống 12 camera vào giải Pickleball tại Hà Nội để hỗ trợ trọng tài.</p>
+                                <a href="https://dantri.com.vn/the-thao/ap-dung-cong-nghe-var-hien-dai-nhat-o-giai-pickleball-cua-bao-dan-tri-20250627233517768.htm" target="_blank" class="btn btn-outline-primary btn-sm">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+</div>

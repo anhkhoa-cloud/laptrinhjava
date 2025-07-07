@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lịch Sử Đặt Lịch</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: #f7f8fa;
+        }
+        .card {
+            border-radius: 18px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+            margin-top: 40px;
+            background: #fff;
+        }
+        .card-header {
+            padding: 24px 0 18px 0;
+            background: linear-gradient(90deg, #7b8cff 0%, #7f53ac 100%);
+            color: #fff;
+            border-top-left-radius: 18px;
+            border-top-right-radius: 18px;
+        }
+        .table {
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 0;
+            width: 100%;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        .table th {
+            background: linear-gradient(90deg, #7b8cff 0%, #7f53ac 100%);
+            color: #fff;
+        }
+        .badge-success {
+            background: #6fdc8c !important;
+            color: #fff !important;
+            padding: 6px 18px;
+            border-radius: 18px;
+            font-size: 1rem;
+            display: inline-block;
+        }
+        .badge-warning {
+            background: #ffd36f !important;
+            color: #333 !important;
+            padding: 6px 18px;
+            border-radius: 18px;
+            font-size: 1rem;
+            display: inline-block;
+        }
+        .badge-secondary {
+            background: #bdbdbd !important;
+            color: #fff !important;
+            padding: 6px 18px;
+            border-radius: 18px;
+            font-size: 1rem;
+            display: inline-block;
+        }
+        .main-content {
+            min-height: 100vh;
+            padding: 40px 0;
+        }
+    </style>
+</head>
+<body>
+<main class="main-content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-11">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h4 style="margin: 0; font-size: 2rem;">
+                            <i class="fas fa-calendar-alt"></i> Lịch Sử Đặt Lịch
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Ngày đặt</th>
+                                    <th>Giờ bắt đầu</th>
+                                    <th>Giờ kết thúc</th>
+                                    <th>Huấn luyện viên</th>
+                                    <th>Trạng thái</th>
+                                    <th>Ngày tạo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="booking : ${bookings}">
+                                    <td th:text="${booking.bookingDate}"></td>
+                                    <td th:text="${booking.startTime}"></td>
+                                    <td th:text="${booking.endTime}"></td>
+                                    <td th:text="${booking.coach.user.fullName}"></td>
+                                    <td>
+                                        <span th:if="${booking.status == 'ĐÃ_XÁC_NHẬN'}" class="badge badge-success">Đã xác nhận</span>
+                                        <span th:if="${booking.status == 'CHỜ_XÁC_NHẬN'}" class="badge badge-warning">Chờ xác nhận</span>
+                                        <span th:if="${booking.status != 'ĐÃ_XÁC_NHẬN' and booking.status != 'CHỜ_XÁC_NHẬN'}" class="badge badge-secondary" th:text="${booking.status}"></span>
+                                    </td>
+                                    <td th:text="${booking.createdAt}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div th:if="${bookings == null or bookings.empty}" class="text-center text-muted mt-3">
+                            <i class="fas fa-info-circle"></i> Chưa có lịch sử đặt lịch nào.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

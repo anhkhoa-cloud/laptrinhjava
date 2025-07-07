@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt Lịch Học - Pickellbal</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}"><i class="fas fa-table-tennis"></i> Pickellbal</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-7 col-lg-6">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <h4><i class="fas fa-calendar-plus"></i> Đặt Lịch Học Với Huấn Luyện Viên</h4>
+                        </div>
+                        <div class="card-body">
+                            <form th:action="@{/bookings/new}" method="post">
+                                <div class="mb-3">
+                                    <label for="coach" class="form-label"><i class="fas fa-user-tie"></i> Chọn huấn luyện viên</label>
+                                    <select class="form-select" id="coach" name="coach.coachId" required>
+                                        <option th:each="coach : ${coaches}" th:value="${coach.coachId}" th:text="${coach.user.fullName}"></option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bookingDate" class="form-label"><i class="fas fa-calendar"></i> Ngày học</label>
+                                    <input type="date" class="form-control" id="bookingDate" name="bookingDate" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="startTime" class="form-label"><i class="fas fa-clock"></i> Giờ bắt đầu</label>
+                                    <input type="time" class="form-control" id="startTime" name="startTime" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="endTime" class="form-label"><i class="fas fa-clock"></i> Giờ kết thúc</label>
+                                    <input type="time" class="form-control" id="endTime" name="endTime" required>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-calendar-plus"></i> Đặt Lịch
+                                    </button>
+                                </div>
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <a th:href="@{/bookings/history}" class="btn btn-outline-secondary btn-sm">
+                                    <i class="fas fa-history"></i> Xem lịch sử đặt lịch
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-table-tennis"></i> Pickellbal</h5>
+                    <p>Nền tảng học Pickleball trực tuyến hàng đầu Việt Nam</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2024 Pickellbal. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 
