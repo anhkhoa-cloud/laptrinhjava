@@ -51,7 +51,7 @@
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                      <tr>
+                      <tr th:each="student : ${students}">
                         <td>
                           <div class="d-flex align-items-center">
                             <img
@@ -62,13 +62,12 @@
                               height="40"
                             />
                             <div>
-                              <strong>Nguyễn Văn A</strong>
-                              <div class="text-muted small">Học viên mới</div>
+                              <strong th:text="${student.fullName}"></strong>
                             </div>
                           </div>
                         </td>
-                        <td>nguyenvana@email.com</td>
-                        <td>0123456789</td>
+                        <td th:text="${student.email}"></td>
+                        <td th:text="${student.phone}"></td>
                         <td>
                           <span class="badge bg-label-success me-1"
                             >Đang học</span
@@ -89,6 +88,9 @@
                           </div>
                         </td>
                         <td>
+                          <a th:href="@{'/coach/student/' + ${student.userId}}" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+                        </td>
+                        <td>
                           <div class="dropdown">
                             <button
                               type="button"
@@ -100,18 +102,10 @@
                             <div class="dropdown-menu">
                               <a
                                 class="dropdown-item"
-                                href="javascript:void(0);"
-                                ><i class="bx bx-user me-1"></i>Xem chi tiết</a
+                                th:href="@{'/coach/student/' + ${student.userId}}"
+                                ><i class="bx bx-user me-1"></i>Chi tiết</a
                               >
-                              <a
-                                class="dropdown-item"
-                                href="javascript:void(0);"
-                                ><i class="bx bx-chart me-1"></i>Theo dõi tiến
-                                độ</a
-                              >
-                              <a
-                                class="dropdown-item"
-                                href="javascript:void(0);"
+                              <a class="dropdown-item" href="/coach/assignment"
                                 ><i class="bx bx-book me-1"></i>Giao bài tập</a
                               >
                             </div>
