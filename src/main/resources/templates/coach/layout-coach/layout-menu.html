@@ -4,7 +4,7 @@
   class="layout-menu menu-vertical menu bg-menu-theme"
 >
   <div class="app-brand demo">
-    <a href="index.html" class="app-brand-link">
+    <a href="/coach/dashboard" class="app-brand-link">
       <span class="app-brand-logo demo">
         <svg
           width="25"
@@ -78,11 +78,11 @@
           </g>
         </svg>
       </span>
-      <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+      <span class="app-brand-text demo menu-text fw-bolder ms-2">PICKLEPALL</span>
     </a>
 
     <a
-      href="javascript:void(0);"
+      href="/coach/dashboard"
       class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none"
     >
       <i class="bx bx-chevron-left bx-sm align-middle"></i>
@@ -103,7 +103,7 @@
     <!-- Layouts -->
     <li class="menu-item">
       <a href="#" class="menu-link menu-toggle">
-        <i class="menu-icon tf-icons bx bx-layout"></i>
+        <i class="menu-icon tf-icons bx bx-user-circle"></i>
         <div data-i18n="Profile">Hồ sơ cá nhân</div>
       </a>
 
@@ -120,9 +120,9 @@
         </li>
       </ul>
     </li>
-    <li class="menu-item">
+      <li class="menu-item">
       <a href="#" class="menu-link menu-toggle">
-        <i class="menu-icon tf-icons bx bx-dock-top"></i>
+        <i class="menu-icon tf-icons bx bx-calendar-check"></i>
         <div data-i18n="Account Settings">Quản lý lịch</div>
       </a>
       <ul class="menu-sub">
@@ -139,40 +139,31 @@
       </ul>
     </li>
     <li class="menu-item">
-      <a href="/coach/students" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-home-circle"></i>
-        <div data-i18n="Analytics">Quản lý học viên</div>
+      <a href="#" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-group"></i>
+        <div data-i18n="Account Settings">Quản lý học viên</div>
       </a>
-      <!-- <ul class="menu-sub">
+      <ul class="menu-sub">
         <li class="menu-item">
-          <a href="auth-login-basic.html" class="menu-link" target="_blank">
-            <div data-i18n="Basic">Danh sách học viên</div>
+          <a href="/coach/student" class="menu-link">
+            <div data-i18n="Account">Xem danh sách học viên</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="auth-register-basic.html" class="menu-link" target="_blank">
-            <div data-i18n="Basic">Theo dõi tiến độ</div>
+          <a href="/coach/assignment" class="menu-link">
+            <div data-i18n="Notifications">Tiến độ & Bài tập</div>
           </a>
         </li>
-        <li class="menu-item">
-          <a
-            href="auth-forgot-password-basic.html"
-            class="menu-link"
-            target="_blank"
-          >
-            <div data-i18n="Basic">Giao bài tập</div>
-          </a>
-        </li>
-        <li class="menu-item">
-          <a
-            href="auth-forgot-password-basic.html"
-            class="menu-link"
-            target="_blank"
-          >
-            <div data-i18n="Basic">Sửa bài tập</div>
-          </a>
-        </li>
-      </ul> -->
+      </ul>
+    </li>
+    <!-- Notifications -->
+<li class="menu-item">
+  <a href="/notification" class="menu-link">
+    <i class="menu-icon tf-icons bx bx-bell"></i>
+    <div data-i18n="Notifications">Thông báo</div>
+  </a>
+</li>
+  
     </li>
   </ul>
 </aside>

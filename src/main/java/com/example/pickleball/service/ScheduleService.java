@@ -14,16 +14,27 @@ public class ScheduleService {
     @Autowired
     private ScheduleRepository scheduleRepository;
 
+      @Autowired
+    private CoachService coachService;
+
    public List<Schedule> getSchedulesByCoach(Coach coach) {
         return scheduleRepository.findByCoach(coach);
     }
 
-    public Schedule addOrUpdateSchedule(Schedule schedule) {
-        return scheduleRepository.save(schedule);
-    }
 
-    public void deleteSchedule(Long id) {
-        scheduleRepository.deleteById(id);
+     public int countSchedulesForCoach(Integer coachUserId) {
+      Coach coach = coachService.getCoachByUserId(coachUserId);
+      if (coach == null) return 0;
+      return scheduleRepository.findByCoach(coach).size();
+  }
+
+    // Lấy danh sách lịch dạy của coach (nếu cần)
+    public List<Schedule> getSchedulesForCoach(Integer coachUserId) {
+        Coach coach = coachService.getCoachByUserId(coachUserId);
+        if (coach == null) return List.of();
+        return scheduleRepository.findByCoach(coach);
     }
-    
 }
+
+
+    

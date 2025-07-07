@@ -3,7 +3,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "coaches")
@@ -39,6 +39,9 @@ public class Coach {
 
     @Column
     private Timestamp updatedAt;
+     
+  @OneToMany(mappedBy = "coach")
+  private List<Schedule> schedules;
 
     @PrePersist
     protected void onCreate() {
@@ -50,7 +53,6 @@ public class Coach {
         updatedAt = new Timestamp(System.currentTimeMillis());
     }
      public Coach() {
-        // Đây là constructor mặc định, không cần làm gì trong thân hàm
     }
 
 

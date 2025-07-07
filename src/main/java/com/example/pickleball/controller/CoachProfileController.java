@@ -1,12 +1,13 @@
 package com.example.pickleball.controller;
 
-import java.io.File;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import com.example.pickleball.model.Coach;
 import com.example.pickleball.model.User;
 import com.example.pickleball.service.CoachService;
+import com.example.pickleball.service.ScheduleService;
 import com.example.pickleball.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +21,42 @@ public class CoachProfileController {
     @Autowired
 private UserService userService;
 
+    @Autowired
+    private ScheduleService scheduleService;
 
-     @GetMapping("/dashboard")  
-    public String dashboard(){
-        return "coach/dashboard";
+
+   @GetMapping("/dashboard")
+public String dashboard(Model model, HttpSession session) {
+    Integer userId = (Integer) session.getAttribute("userId");
+    if (userId == null) {
+        return "redirect:/login";
     }
+    // Lấy user
+    User user = userService.getUserById(userId);
+    // Lấy coach từ user
+    Coach coach = coachService.getCoachByUser(user);
+    if (coach == null) {
+        return "redirect:/login";
+    }
+      model.addAttribute("user", user);
+        model.addAttribute("coach", coach);
+
+
+    // Đếm tổng số học viên
+    int studentCount = userService.countAllStudents();
+
+    // Đếm lịch dạy của coach
+    int scheduleCount = scheduleService.countSchedulesForCoach(coach.getCoachId().intValue());
+
+    // Đếm nhắc nhở (nếu chưa có thì để số tĩnh)
+    int reminderCount = 0;
+
+    model.addAttribute("reminderCount", reminderCount);
+    model.addAttribute("scheduleCount", scheduleCount);
+    model.addAttribute("studentCount", studentCount);
+
+    return "coach/dashboard";
+}
     //Xem trang thông tin cá nhân
     @GetMapping("/profile")
     public String viewProfile(HttpSession session, Model model){
@@ -74,188 +106,21 @@ public String updateProfile(
         return "coach/update-profile";
     }
 
-    User user = userService.getUserById(userId);
-    Coach coach = coachService.getCoachByUser(user);
-
-    if (user == null) {
-        model.addAttribute("errorMessage", "Không tìm thấy người dùng để cập nhật.");
-        return "coach/update-profile";
-    }
-    if (coach == null) {
-        model.addAttribute("errorMessage", "Không tìm thấy hồ sơ huấn luyện viên để cập nhật.");
-        return "coach/update-profile";
-    }
-
     try {
-        // Update thông tin chung
-        user.setFullName(userForm.getFullName());
-        user.setPhone(userForm.getPhone());
-        user.setAddress(userForm.getAddress());
-        user.setEmail(userForm.getEmail());
-        userService.updateUser(user);
-
-        // Update thông tin Coach
-        coach.setBio(coachForm.getBio());
-        coach.setExperience(coachForm.getExperience());
-        coach.setCertifications(coachForm.getCertifications());
-        coach.setHourlyRate(coachForm.getHourlyRate());
-
-        // Xử lý upload file
-        if (avatarFile != null && !avatarFile.isEmpty()) {
-            String uploadDir = "src/main/resources/static/uploads";
-            String fileName = avatarFile.getOriginalFilename();
-
-            File uploadPath = new File(uploadDir);
-            if (!uploadPath.exists()) {
-                uploadPath.mkdirs();
-            }
-
-            File dest = new File(uploadPath, fileName);
-            avatarFile.transferTo(dest);
-
-            // Lưu đường dẫn ảnh vào DB
-            coach.setImagePath("/uploads/" + fileName);
-        }
-
-        coachService.updateCoachProfile(coach);
-
+        coachService.updateCoachProfile(userId, userForm, coachForm, avatarFile);
         model.addAttribute("successMessage", "Cập nhật thành công");
     } catch (Exception e) {
         e.printStackTrace();
         model.addAttribute("errorMessage", "Cập nhật không thành công! " + e.getMessage());
     }
 
+    // Lấy lại thông tin mới để hiển thị
+    User user = userService.getUserById(userId);
+    Coach coach = coachService.getCoachByUser(user);
     model.addAttribute("user", user);
     model.addAttribute("coach", coach);
 
     return "coach/update-profile";
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    
-    //Xem danh sách học viên
-     @GetMapping("/students")
-    public String Student(){
-        return "coach/students";
-    }
-    //Xem thông tiến độ học tập
-     @GetMapping("/student-process")
-    public String StudentProcess(){
-        return "coach/student-process";
-    }
-    //Giao bài tập
-     @GetMapping("/assignment")
-    public String assignment(){
-        return "coach/assignment";
-    }
-
-
-
 }
 
-
-//     //Xem hồ sơ cá nhân
-//     @GetMapping("/profile")
-//     public String viewProfile(HttpSession session, Model model) {
-//         User user = (User) session.getAttribute("loggedInUser");
-
-//         if (user == null) {
-//             return "redirect:/login"; // Chưa đăng nhập thì về trang login
-//         }
-
-//         Coach coach = coachService.getCoachByUser(user);
-//         if (coach == null) {
-//             model.addAttribute("error", "Không tìm thấy hồ sơ huấn luyện viên!");
-//             return "coach/profile";
-//         }
-
-//         model.addAttribute("coach", coach);
-//         return "coach/profile"; 
-//     }
-
-//     //Xử lý cập nhật hồ sơ POST
-//     @PostMapping("/profile/update")
-//     public String updateProfile(@ModelAttribute("coach") Coach formCoach,
-//                                 HttpSession session,
-//                                 Model model) {
-//         User user = (User) session.getAttribute("loggedInUser");
-
-//         if (user == null) {
-//             return "redirect:/login";
-//         }
-
-//         Coach coach = coachService.getCoachByUser(user);
-//         if (coach == null) {
-//             model.addAttribute("error", "Không tìm thấy hồ sơ để cập nhật!");
-//             return "coach/profile";
-//         }
-
-//         // Cập nhật thông tin
-//         coach.setBio(formCoach.getBio());
-//         coach.setExperience(formCoach.getExperience());
-//         coach.setCertifications(formCoach.getCertifications());
-//         coach.setHourlyRate(formCoach.getHourlyRate());
-//         coach.setImagePath(formCoach.getImagePath());
-
-//         // Lưu lại
-//         coachService.updateCoachProfile(coach);
-
-//         model.addAttribute("coach", coach);
-//         model.addAttribute("success", "Cập nhật hồ sơ thành công!");
-//         return "coach/update-profile";
-//     }
-// }

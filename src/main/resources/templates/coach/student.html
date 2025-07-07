@@ -1,22 +1,21 @@
-<!-- Basic Bootstrap Table -->
-
 <!DOCTYPE html>
 <html
   lang="en"
   class="light-style layout-menu-fixed"
   dir="ltr"
   data-theme="theme-default"
-  data-assets-path="../assets/"
+  data-assets-path="/assets/"
   data-template="vertical-menu-template-free"
   xmlns:th="http://www.thymeleaf.org"
 >
-  <head th:replace="coach/layout-coach/layout-head :: layout-head"></head>
+  <head th:replace="coach/layout-coach/layout-head :: layout-head">
+    Quản lý học viên
+  </head>
   <body>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Menu -->
-
         <div th:replace="coach/layout-coach/layout-menu ::layout-menu"></div>
         <!-- / Menu -->
 
@@ -31,13 +30,16 @@
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
-
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4">
                 <span class="text-muted fw-light">Danh sách học viên</span>
               </h4>
               <div class="card">
-                <h5 class="card-header">Danh sách học viên</h5>
+                <div
+                  class="d-flex justify-content-between align-items-center card-header"
+                >
+                  <span>Danh sách học viên</span>
+                </div>
                 <div class="table-responsive text-nowrap">
                   <table class="table">
                     <thead>
@@ -46,47 +48,46 @@
                         <th>Email</th>
                         <th>Số điện thoại</th>
                         <th>Trạng thái</th>
-                        <th>Tiến độ học</th>
                         <th>Thao tác</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                      <tr>
+                      <tr th:each="student : ${students}">
                         <td>
                           <div class="d-flex align-items-center">
                             <img
-                              src="../assets/img/avatars/5.png"
+                              th:src="'/assets/img/avatars/5.png'"
                               alt="Avatar"
                               class="rounded-circle me-3"
                               width="40"
                               height="40"
                             />
                             <div>
-                              <strong>Nguyễn Văn A</strong>
-                              <div class="text-muted small">Học viên mới</div>
-                            </div>
-                          </div>
-                        </td>
-                        <td>nguyenvana@email.com</td>
-                        <td>0123456789</td>
-                        <td>
-                          <span class="badge bg-label-success me-1"
-                            >Đang học</span
-                          >
-                        </td>
-                        <td>
-                          <div class="d-flex align-items-center">
-                            <div
-                              class="progress me-3"
-                              style="width: 60px; height: 6px"
-                            >
+                              <strong th:text="${student.fullName}"
+                                >Tên học viên</strong
+                              >
                               <div
-                                class="progress-bar bg-success"
-                                style="width: 75%"
-                              ></div>
+                                class="text-muted small"
+                                th:text="${student.username}"
+                              >
+                                Username
+                              </div>
                             </div>
-                            <span class="text-muted small">75%</span>
                           </div>
+                        </td>
+                        <td th:text="${student.email}">email@email.com</td>
+                        <td th:text="${student.phone}">0123456789</td>
+                        <td>
+                          <span
+                            class="badge bg-label-success me-1"
+                            th:if="${student.isActive}"
+                            >Hoạt động</span
+                          >
+                          <span
+                            class="badge bg-label-danger me-1"
+                            th:unless="${student.isActive}"
+                            >Không hoạt động</span
+                          >
                         </td>
                         <td>
                           <div class="dropdown">
@@ -100,13 +101,23 @@
                             <div class="dropdown-menu">
                               <a
                                 class="dropdown-item"
-                                href="/coach/student-process"
-                                ><i class="bx bx-chart me-1"></i>Theo dõi tiến
-                                độ</a
+                                th:href="@{|/coach/student/${student.userId}|}"
                               >
-                              <a class="dropdown-item" href="/coach/assignment"
-                                ><i class="bx bx-book me-1"></i>Giao bài tập</a
+                                <i class="bx bx-show me-1"></i>Xem chi tiết
+                              </a>
+                              <form
+                                th:action="@{|/coach/student/${student.userId}/delete|}"
+                                method="post"
+                                style="display: inline"
                               >
+                                <button
+                                  type="submit"
+                                  class="dropdown-item text-danger"
+                                  onclick="return confirm('Bạn có chắc muốn xoá học viên này?');"
+                                >
+                                  <i class="bx bx-trash me-1"></i>Xoá
+                                </button>
+                              </form>
                             </div>
                           </div>
                         </td>
@@ -119,7 +130,6 @@
             <!-- / Content -->
 
             <!-- Footer -->
-
             <footer
               th:replace="coach/layout-coach/layout-footer :: layout-footer"
             ></footer>
@@ -138,23 +148,11 @@
     <!-- / Layout wrapper -->
 
     <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
     <script src="../assets/vendor/libs/jquery/jquery.js"></script>
     <script src="../assets/vendor/libs/popper/popper.js"></script>
     <script src="../assets/vendor/js/bootstrap.js"></script>
     <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-
     <script src="../assets/vendor/js/menu.js"></script>
-    <!-- endbuild -->
-
-    <!-- Vendors JS -->
-
-    <!-- Main JS -->
     <script src="../assets/js/main.js"></script>
-
-    <!-- Page JS -->
-
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
 </html>

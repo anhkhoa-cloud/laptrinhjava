@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  class="light-style layout-menu-fixed"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="../assets/"
+  data-template="vertical-menu-template-free"
+  xmlns:th="http://www.thymeleaf.org"
+>
+  <head th:replace="~{coach/layout-coach/layout-head :: layout-head}"></head>
+  <body>
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        <div
+          th:replace="~{coach/layout-coach/layout-menu :: layout-menu}"
+        ></div>
+        <div class="layout-page">
+          <div
+            th:replace="~{coach/layout-coach/layout-navbar :: layout-navbar}"
+          ></div>
+          <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <!-- ... phần nội dung của bạn ... -->
+              <div class="row">
+                <!-- Thông tin học viên -->
+                <div class="col-lg-4 mb-4">
+                  <div class="card">
+                    <div class="card-body text-center">
+                      <img
+                        th:src="@{/assets/img/avatars/5.png}"
+                        class="rounded-circle mb-3"
+                        width="100"
+                        height="100"
+                        alt="Avatar"
+                      />
+                      <h5 class="mb-1" th:text="${student.fullName}">
+                        Nguyễn Văn A
+                      </h5>
+                      <span class="badge bg-label-primary mb-2">Học viên</span>
+                      <ul class="list-unstyled text-start mt-3 mb-0">
+                        <li>
+                          <strong>Mã HV:</strong>
+                          <span th:text="${student.userId}">HV12345</span>
+                        </li>
+                        <li>
+                          <strong>Email:</strong>
+                          <span th:text="${student.email}"
+                            >nguyenvana@email.com</span
+                          >
+                        </li>
+                        <li>
+                          <strong>Số điện thoại:</strong>
+                          <span th:text="${student.phone}">0123456789</span>
+                        </li>
+                        <li>
+                          <strong>Địa chỉ:</strong>
+                          <span th:text="${student.address}">Hà Nội</span>
+                        </li>
+                        <li>
+                          <strong>Trạng thái:</strong>
+                          <span
+                            th:class="'badge ' + (${student.isActive} ? 'bg-success' : 'bg-danger')"
+                            th:text="${student.isActive ? 'Đang học' : 'Ngừng học'}"
+                            >Đang học</span
+                          >
+                        </li>
+                        <li class="mt-2">
+                          <strong>Tiến độ tổng thể:</strong>
+                          <div class="progress mt-1" style="height: 8px">
+                            <div
+                              class="progress-bar bg-success"
+                              th:style="'width: ' + ${progressPercentage} + '%'"
+                            ></div>
+                          </div>
+                          <span
+                            class="text-muted small"
+                            th:text="${progressPercentage} + '%'"
+                            >75%</span
+                          >
+                        </li>
+                        <li class="mt-2">
+                          <strong>Buổi đã học:</strong>
+                          <span
+                            th:text="${completedSessions} + '/' + ${totalSessions}"
+                            >3/4</span
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <!-- Tiến độ chi tiết -->
+                <div class="col-lg-8 mb-4">
+                  <div class="card">
+                    <div
+                      class="card-header d-flex justify-content-between align-items-center"
+                    >
+                      <h5>Chi tiết tiến độ học tập</h5>
+                    </div>
+                    <div class="card-body">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>Buổi học</th>
+                            <th>Ngày</th>
+                            <th>Giờ</th>
+                            <th>Địa điểm</th>
+                            <th>Trạng thái</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr th:each="booking, bookingStat : ${bookings}">
+                            <td>
+                              Buổi học
+                              <span th:text="${bookingStat.count}">1</span>
+                            </td>
+                            <td
+                              th:text="${#dates.format(booking.bookingDate, 'dd/MM/yyyy')}"
+                            >
+                              01/06/2024
+                            </td>
+                            <td>
+                              <span th:text="${booking.startTime}"></span> -
+                              <span th:text="${booking.endTime}"></span>
+                            </td>
+                            <td th:text="${booking.location}">
+                              Sân Pickleball
+                            </td>
+                            <td>
+                              <span
+                                th:class="'badge ' + (${booking.status.name() == 'HOÀN_THÀNH'} ? 'bg-success' : (${booking.status.name() == 'ĐÃ_HỦY'} ? 'bg-danger' : (${booking.status.name() == 'ĐÃ_XÁC_NHẬN'} ? 'bg-primary' : 'bg-warning text-dark')))"
+                                th:text="${booking.status}"
+                                >Đã tham gia</span
+                              >
+                            </td>
+                          </tr>
+                          <tr th:if="${#lists.isEmpty(bookings)}">
+                            <td colspan="5" class="text-center text-muted">
+                              Chưa có buổi học nào
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Nút quay lại -->
+            <div class="text-center mt-3">
+              <a th:href="@{/coach/student}" class="btn btn-secondary">
+                <i class="bx bx-arrow-back"></i> Quay lại danh sách
+              </a>
+            </div>
+          </div>
+          <footer
+            th:replace="~{coach/layout-coach/layout-footer :: layout-footer}"
+          ></footer>
+        </div>
+      </div>
+    </div>
+    <script th:src="@{/assets/vendor/libs/jquery/jquery.js}"></script>
+    <script th:src="@{/assets/vendor/libs/popper/popper.js}"></script>
+    <script th:src="@{/assets/vendor/js/bootstrap.js}"></script>
+    <script
+      th:src="@{/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"
+    ></script>
+    <script th:src="@{/assets/vendor/js/menu.js}"></script>
+    <script th:src="@{/assets/js/main.js}"></script>
+  </body>
+</html>

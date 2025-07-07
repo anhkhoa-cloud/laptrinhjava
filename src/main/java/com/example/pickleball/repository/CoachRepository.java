@@ -10,6 +10,9 @@ import com.example.pickleball.model.User;
 public interface CoachRepository extends JpaRepository<Coach, Long > {
    
     Optional<Coach> findByUser(User user);
+
+    Coach findByUser_UserId(Integer coachUserId);
+   
     
 
 }

@@ -1,109 +1,123 @@
 package com.example.pickleball.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
+import jakarta.persistence.*;
 @Entity
-@Table(name = "schdules")
+@Table(name = "schedules")
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long scheduleId;
 
-    @ManyToOne
-    @JoinColumn(name = "coach_id", nullable = false)
-    private Coach coach;
-
     @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)
-    private Timestamp startTime;
+     private LocalDate startDate;
+    @Column(nullable = false)
+    private LocalTime startTime;
 
     @Column(nullable = false)
-    private Timestamp endTime;
+    private LocalTime endTime; 
 
-    @Column(length = 255)
+    @Column(nullable = false)
     private String location;
 
-    @Column(length = 255)
-    private String note;
 
-    public Schedule(Long scheduleId, Coach coach, String title, Timestamp startTime, Timestamp endTime, String location,
-            String note) {
-        this.coach = coach;
-        this.title = title;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.location = location;
-        this.note = note;
+@ManyToOne
+@JoinColumn(name = "coach_id")
+private Coach coach;
+    public Schedule (){
+
     }
 
     public Long getScheduleId() {
         return scheduleId;
     }
 
+
+
     public void setScheduleId(Long scheduleId) {
         this.scheduleId = scheduleId;
     }
 
-    public Coach getCoach() {
-        return coach;
-    }
 
-    public void setCoach(Coach coach) {
-        this.coach = coach;
-    }
 
     public String getTitle() {
         return title;
     }
 
+
+
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public Timestamp getStartTime() {
+
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+
+
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Timestamp startTime) {
+
+
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public Timestamp getEndTime() {
+
+
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Timestamp endTime) {
+
+
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
+
+
 
     public String getLocation() {
         return location;
     }
 
+
+
     public void setLocation(String location) {
         this.location = location;
     }
 
-    public String getNote() {
-        return note;
+
+
+    public Schedule(Long scheduleId, String title, LocalDate startDate, LocalTime startTime, LocalTime endTime,
+            String location) {
+        
+        this.title = title;
+        this.startDate = startDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.location = location;
     }
 
-    public void setNote(String note) {
-        this.note = note;
-    }
 
     
+
+    
+
 }
-
-    

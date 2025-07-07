@@ -4,8 +4,9 @@
   class="light-style layout-menu-fixed"
   dir="ltr"
   data-theme="theme-default"
-  data-assets-path="../assets/"
+  data-assets-path="/assets/"
   data-template="vertical-menu-template-free"
+  xmlns:th="http://www.thymeleaf.org"
 >
   <head th:replace="coach/layout-coach/layout-head :: layout-head"></head>
   <body>
@@ -13,7 +14,7 @@
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Menu -->
-        <div th:replace="coach/layout-coach/layout-menu :: layout-menu"></div>
+        <div th:replace="coach/layout-coach/layout-menu ::layout-menu"></div>
         <!-- / Menu -->
 
         <!-- Layout container -->
@@ -28,141 +29,160 @@
           <div class="content-wrapper">
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
+              <!-- Hiển thị thông báo -->
+              <div
+                th:if="${param.success}"
+                class="alert alert-success alert-dismissible"
+                role="alert"
+              >
+                <i class="bx bx-check-circle me-2"></i>
+                Giao bài tập thành công!
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                ></button>
+              </div>
+
+              <div
+                th:if="${param.deleted}"
+                class="alert alert-success alert-dismissible"
+                role="alert"
+              >
+                <i class="bx bx-check-circle me-2"></i>
+                Xóa bài tập thành công!
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                ></button>
+              </div>
+
+              <div
+                th:if="${param.error}"
+                class="alert alert-danger alert-dismissible"
+                role="alert"
+              >
+                <i class="bx bx-error-circle me-2"></i>
+                <span th:if="${param.error == 'notfound'}"
+                  >Không tìm thấy bài tập!</span
+                >
+                <span th:if="${param.error == 'deletefailed'}"
+                  >Có lỗi xảy ra khi xóa bài tập!</span
+                >
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                ></button>
+              </div>
+
               <h4 class="fw-bold py-3 mb-4">
                 <span class="text-muted fw-light"
                   >Giao bài tập cho học viên</span
                 >
               </h4>
-              <div class="row">
-                <!-- Thông tin học viên -->
-                <div class="col-lg-5 mb-4">
-                  <div class="card">
-                    <div class="card-body text-center">
-                      <img
-                        src="../assets/img/avatars/5.png"
-                        class="rounded-circle mb-3"
-                        width="100"
-                        height="100"
-                        alt="Avatar"
-                      />
-                      <h5 class="mb-1">Nguyễn Văn A</h5>
-                      <span class="badge bg-label-primary mb-2">Học viên</span>
-                      <ul class="list-unstyled text-start mt-3 mb-0">
-                        <li>
-                          <strong>Mã HV:</strong>
-                          <span>HV12345</span>
-                        </li>
-                        <li>
-                          <strong>Lớp:</strong>
-                          <span>Pickleball A1</span>
-                        </li>
-                        <li>
-                          <strong>Ngày sinh:</strong>
-                          <span>10/10/2005</span>
-                        </li>
-                        <li>
-                          <strong>Email:</strong>
-                          <span>hocvien@example.com</span>
-                        </li>
-                        <li>
-                          <strong>Số điện thoại:</strong>
-                          <span>0909999999</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+
+              <div class="card">
+                <div
+                  class="d-flex justify-content-between align-items-center card-header"
+                >
+                  <span>Danh sách học viên</span>
                 </div>
-                <!-- Form giao bài tập -->
-                <div class="col-lg-7 mb-4">
-                  <div class="card">
-                    <div class="card-header">
-                      <h5 class="mb-0">Giao bài tập</h5>
-                    </div>
-                    <div class="card-body">
-                      <form
-                        method="post"
-                        action="#"
-                        enctype="multipart/form-data"
-                      >
-                        <div class="mb-3">
-                          <label class="form-label" for="title">Tiêu đề</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="title"
-                            name="title"
-                            placeholder="Nhập tiêu đề bài tập"
-                            required
-                          />
-                        </div>
-                        <div class="mb-3">
-                          <label class="form-label" for="description"
-                            >Mô tả</label
+                <div class="table-responsive text-nowrap">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Học viên</th>
+                        <th>Email</th>
+                        <th>Số điện thoại</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                      <tr th:each="student : ${students}">
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <img
+                              th:src="@{/assets/img/avatars/5.png}"
+                              alt="Avatar"
+                              class="rounded-circle me-3"
+                              width="40"
+                              height="40"
+                            />
+                            <div>
+                              <strong th:text="${student.fullName}"
+                                >Tên học viên</strong
+                              >
+                              <div
+                                class="text-muted small"
+                                th:text="${student.username}"
+                              >
+                                Username
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td th:text="${student.email}">email@email.com</td>
+                        <td th:text="${student.phone}">0123456789</td>
+                        <td>
+                          <span
+                            class="badge bg-label-success me-1"
+                            th:if="${student.isActive}"
+                            >Hoạt động</span
                           >
-                          <textarea
-                            class="form-control"
-                            id="description"
-                            name="description"
-                            rows="4"
-                            placeholder="Nhập mô tả bài tập"
-                            required
-                          ></textarea>
-                        </div>
-                        <div class="mb-3">
-                          <label class="form-label" for="file"
-                            >File đính kèm</label
+                          <span
+                            class="badge bg-label-danger me-1"
+                            th:unless="${student.isActive}"
+                            >Không hoạt động</span
                           >
-                          <input
-                            class="form-control"
-                            type="file"
-                            id="file"
-                            name="file"
-                          />
-                        </div>
-                        <div class="mb-3">
-                          <label class="form-label" for="deadline"
-                            >Hạn nộp</label
+                        </td>
+                        <td>
+                          <a
+                            th:href="@{|/coach/assignment/add/${student.userId}|}"
+                            class="btn btn-primary btn-sm"
                           >
-                          <input
-                            type="date"
-                            class="form-control"
-                            id="deadline"
-                            name="deadline"
-                            required
-                          />
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                          Giao bài tập
-                        </button>
-                      </form>
-                    </div>
-                  </div>
+                            <i class="bx bx-plus me-1"></i>Thêm bài tập
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                <!-- /Form giao bài tập -->
               </div>
             </div>
             <!-- / Content -->
 
             <!-- Footer -->
-            <div
+            <footer
               th:replace="coach/layout-coach/layout-footer :: layout-footer"
-            ></div>
+            ></footer>
             <!-- / Footer -->
+
+            <div class="content-backdrop fade"></div>
           </div>
           <!-- Content wrapper -->
         </div>
         <!-- / Layout page -->
       </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
     </div>
     <!-- / Layout wrapper -->
 
     <!-- Core JS -->
-    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="../assets/vendor/libs/popper/popper.js"></script>
-    <script src="../assets/vendor/js/bootstrap.js"></script>
-    <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="../assets/vendor/js/menu.js"></script>
-    <!-- Main JS -->
-    <script src="../assets/js/main.js"></script>
+    <script th:src="@{/assets/vendor/libs/jquery/jquery.js}"></script>
+    <script th:src="@{/assets/vendor/libs/popper/popper.js}"></script>
+    <script th:src="@{/assets/vendor/js/bootstrap.js}"></script>
+    <script
+      th:src="@{/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"
+    ></script>
+    <script th:src="@{/assets/vendor/js/menu.js}"></script>
+    <script th:src="@{/assets/js/main.js}"></script>
   </body>
 </html>
