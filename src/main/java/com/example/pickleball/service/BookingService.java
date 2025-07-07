@@ -30,7 +30,5 @@ public class BookingService {
  
 public List<Booking> getBookingsByStudentAndCoach(User student, Coach coach) {
     return bookingRepository.findByStudentAndCoach(student, coach);
-}
-
- 
+} 
 }
