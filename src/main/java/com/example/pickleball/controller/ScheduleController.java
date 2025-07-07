@@ -27,7 +27,7 @@ public class ScheduleController {
 private UserService userService;
 
 
-    // Trang giao diện lịch dạy (Thymeleaf)
+    // Trang giao diện lịch dạy 
     @GetMapping("/coach/schedule")
     public String viewSchedule(HttpSession session, Model model) {
        Integer userId = (Integer) session.getAttribute("userId");
