@@ -48,7 +48,6 @@ public String dashboard(Model model, HttpSession session) {
     // Đếm lịch dạy của coach
     int scheduleCount = scheduleService.countSchedulesForCoach(coach.getCoachId().intValue());
 
-    // Đếm nhắc nhở (nếu chưa có thì để số tĩnh)
     int reminderCount = 0;
 
     model.addAttribute("reminderCount", reminderCount);
