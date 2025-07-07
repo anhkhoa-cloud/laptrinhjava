@@ -45,7 +45,7 @@ public class AssignmentController {
         }
         model.addAttribute("student", student);
         model.addAttribute("assignment", new Assignment());
-        // Lấy danh sách bài tập đã giao cho học viên này (nếu muốn hiển thị tiến độ)
+        // Lấy danh sách bài tập đã giao cho học viên này 
         List<Assignment> assignments = assignmentRepository.findByStudent(student);
         model.addAttribute("studentAssignments", assignments);
         return "coach/add-assignment";
@@ -78,7 +78,6 @@ public String addAssignment(@PathVariable("studentId") Integer studentId,
             }
             java.nio.file.Path filePath = uploadPath.resolve(fileName);
             attachment.transferTo(filePath.toFile());
-            // assignment.setAttachmentPath(filePath.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
