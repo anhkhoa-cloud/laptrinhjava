@@ -20,6 +20,9 @@ public class Coach {
     @Column(name = "imagePath",length = 255)
     private String imagePath;
 
+    @Column(name = "location", length = 255)
+    private String location;
+    
     @Column(precision = 10, scale = 2)
     private Double hourlyRate;
 
@@ -67,6 +70,12 @@ public class Coach {
     }
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+     public String getLocation() {
+        return location;
+    }
+    public void setLocation(String location) {
+        this.location = location;
     }
     // ...
 } 
