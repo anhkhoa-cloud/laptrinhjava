@@ -13,9 +13,10 @@
                 <div class="card-body text-center">
                     <h5 class="card-title fw-bold mb-2" th:text="${coach.user.fullName}">Tên HLV</h5>
                     <p class="card-text text-muted mb-2" th:text="${coach.bio}">Thông tin HLV</p>
+                    <p class="card-text text-muted mb-2" th:text="${'Địa điểm: ' + coach.location}">Đia điểm</p>
                     <p class="card-text price mb-3">
                         <strong>Giá/giờ:</strong>
-                        <span th:text="${coach.hourlyRate}">0</span> VNĐ
+                        <span th:text="${#numbers.formatDecimal(coach.hourlyRate, 0, 'COMMA', 0, 'POINT')}">0</span> VNĐ
                     </p>
                     <button class="btn btn-primary mt-2" type="button"
                             data-bs-toggle="collapse"
