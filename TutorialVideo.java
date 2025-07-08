@@ -1,56 +1,51 @@
-package com.pickellbal.model;
+package com.pickleball.khoa.admin.model;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tutorial_videos")
 public class TutorialVideo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int videoId;
+    @Column(name = "video_id")
+    private Long videoId;
 
-    @Column(nullable = false, length = 200)
+    @Column(name = "title")
     private String title;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "description")
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 10)
-    private VideoType videoType = VideoType.YOUTUBE;
-
-    @Column(length = 50)
+    @Column(name = "youtube_id")
     private String youtubeId;
 
-    @Column(length = 255)
+    @Column(name = "file_url")
     private String fileUrl;
 
-    @ManyToOne
-    @JoinColumn(name = "created_by")
-    private User createdBy;
+    @Column(name = "is_active")
+    private Boolean isActive;
 
-    @Column(nullable = false)
-    private boolean isActive = true;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    @Column(nullable = false)
-    private Timestamp createdAt;
+    @Column(name = "created_by")
+    private String createdBy;
 
-    public enum VideoType {
-        YOUTUBE, UPLOAD
-    }
+    // === Getter & Setter ===
 
-    @PrePersist
-    protected void onCreate() {
-        createdAt = new Timestamp(System.currentTimeMillis());
-    }
-
-    // Getters and Setters
-    public int getVideoId() {
+    public Long getVideoId() {
         return videoId;
     }
 
-    public void setVideoId(int videoId) {
+    public void setVideoId(Long videoId) {
         this.videoId = videoId;
     }
 
@@ -70,14 +65,6 @@ public class TutorialVideo {
         this.description = description;
     }
 
-    public VideoType getVideoType() {
-        return videoType;
-    }
-
-    public void setVideoType(VideoType videoType) {
-        this.videoType = videoType;
-    }
-
     public String getYoutubeId() {
         return youtubeId;
     }
@@ -94,27 +81,39 @@ public class TutorialVideo {
         this.fileUrl = fileUrl;
     }
 
-    public User getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(User createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public boolean isActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
 
-    public Timestamp getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-} 
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    @Column(name = "video_type")
+    private String videoType;
+
+    public String getVideoType() {
+        return videoType;
+    }
+
+    public void setVideoType(String videoType) {
+        this.videoType = videoType;
+    }
+
+}

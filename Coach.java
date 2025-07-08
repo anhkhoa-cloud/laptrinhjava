@@ -1,64 +1,93 @@
-package com.pickellbal.model;
+package com.pickleball.khoa.admin.model;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
+import jakarta.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "coaches")
 public class Coach {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int coachId;
+    @Column(name = "coach_id")
+    private Long coachId;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false, unique = true)
-    private User user;
+    @Column(name = "user_id")
+    private Long userId;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "bio")
     private String bio;
 
-    @Column(precision = 10, scale = 2)
-    private Double hourlyRate;
+    @Column(name = "image_path")
+    private String imagePath;
 
-    @Column(nullable = false)
-    private boolean isApproved = false;
+    @Column(name = "hourly_rate")
+    private BigDecimal hourlyRate;
 
-    @Column(nullable = false)
-    private Timestamp createdAt;
+    @Column(name = "is_approved")
+    private Boolean isApproved;
 
-    @PrePersist
-    protected void onCreate() {
-        createdAt = new Timestamp(System.currentTimeMillis());
-    }
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+    private LocalDateTime createdAt;
 
-    // Getters and setters
-    public boolean isApproved() {
-        return isApproved;
-    }
-    public void setApproved(boolean approved) {
-        isApproved = approved;
-    }
-    public User getUser() {
-        return user;
-    }
-    public void setUser(User user) {
-        this.user = user;
-    }
-    public String getBio() {
-        return bio;
-    }
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-    public Double getHourlyRate() {
-        return hourlyRate;
-    }
-    public void setHourlyRate(Double hourlyRate) {
-        this.hourlyRate = hourlyRate;
-    }
-    public int getCoachId() {
+
+    // ====== Getter & Setter ======
+    public Long getCoachId() {
         return coachId;
     }
 
-    // ...
-} 
+    public void setCoachId(Long coachId) {
+        this.coachId = coachId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public BigDecimal getHourlyRate() {
+        return hourlyRate;
+    }
+
+    public void setHourlyRate(BigDecimal hourlyRate) {
+        this.hourlyRate = hourlyRate;
+    }
+
+    public Boolean getApproved() {
+        return isApproved;
+    }
+
+    public void setApproved(Boolean approved) {
+        this.isApproved = isApproved;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+}
